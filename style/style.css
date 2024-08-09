@@ -1,0 +1,76 @@
+body {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  margin: 0;
+  background-color: #f0f0f0;
+}
+
+.container {
+  position: relative;
+  width: auto;
+  height: 95vh; /* Base image height relative to screen height */
+}
+
+.image-container {
+  position: relative;
+  width: 100%;
+  height: 100%;
+}
+
+.image {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  border-radius: 15px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  opacity: 0; /* Start with image hidden */
+  transition: opacity 0.5s ease-in-out; /* Transition for dissolve effect */
+}
+
+.base {
+  opacity: 100; /* Start with image hidden */
+}
+
+.overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  display: none; /* Hide by default */
+}
+
+.floating-buttons {
+  position: absolute;
+  top: 2vh; /* Adjust top position relative to screen height */
+  right: 2vh; /* Adjust right position relative to screen height */
+  display: flex;
+  flex-direction: column;
+}
+
+.button-group {
+  margin-bottom: 2vh; /* Space between button groups relative to screen height */
+  margin-right: 2vh; /* Right margin for button groups */
+}
+
+.button-group p {
+  margin: 0 0 1vh 0; /* Margin below the text relative to screen height */
+  font-weight: bold;
+  font-size: 2vh; /* Font size relative to screen height */
+}
+
+.floating-buttons button {
+  margin: 1vh 0; /* Space between buttons relative to screen height */
+  margin-right: 1vh; /* Right margin for each button */
+  padding: 1.5vh 3vh; /* Padding relative to screen height */
+  background-color: #007bff;
+  color: white;
+  border: none;
+  border-radius: 0.5vh; /* Border radius relative to screen height */
+  cursor: pointer;
+  font-size: 2vh; /* Font size relative to screen height */
+}
+
+.floating-buttons button:hover {
+  background-color: #0056b3;
+}

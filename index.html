@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Interactive Digital Painting</title>
+    <link rel="stylesheet" href="style/style.css" />
+</head>
+<body>
+    <div class="container">
+        <div class="image-container">
+            <img id="base-body" src="src/body.png" alt="Base Body" class="image base" />
+            <img id="body" alt="Body" class="image overlay" />
+            <img id="head" alt="Head" class="image overlay" />
+        </div>
+        <div class="floating-buttons">
+            <div class="button-group">
+                <p>Presets:</p>
+                <button onclick="applyPreset('casual')">Casual</button>
+                <button onclick="applyPreset('suit')">Battle Mode</button>
+            </div>
+            <div class="button-group">
+                <p>Body:</p>
+                <button onclick="changeAttribute('body', 'src/armor_anim.png')">Armor</button>
+                <button onclick="changeAttribute('body', 'src/clothes.png')">Clothes</button>
+            </div>
+            <div class="button-group">
+                <p>Head:</p>
+                <button onclick="changeAttribute('head', 'src/helmet_anim.png')">Helmet</button>
+                <button onclick="changeAttribute('head', 'src/hat.png')">Hat</button>
+            </div>
+            <div class="button-group">
+                <p>Download:</p>
+                <button onclick="downloadImage()">Download Image</button>
+            </div>
+        </div>
+    </div>
+    <script src="js/script.js"></script>
+</body>
+</html>
