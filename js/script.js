@@ -73,11 +73,21 @@ document.getElementById('interactive-container').addEventListener('mousemove', f
 function downloadImage() {
   toggleButtonGroup();
   const container = document.getElementById('interactive-container');
+  const buttonContainer = document.getElementById('button-container');
   
-  html2canvas(container).then(function(canvas) {
+  // Temporarily hide the button container
+  buttonContainer.style.display = 'none';
+  
+  html2canvas(container, { 
+      allowTaint: true,
+      useCORS: true
+  }).then(function(canvas) {
       const link = document.createElement('a');
       link.href = canvas.toDataURL('image/png');
       link.download = 'interactive-digital-painting.png';
       link.click();
+      
+      // Show the button container again
+      buttonContainer.style.display = 'flex';
   });
 }
