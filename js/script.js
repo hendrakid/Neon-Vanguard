@@ -2,6 +2,7 @@ let currentPreset = '';
 let isButtonGroupVisible = false;
 
 function changeAttribute(attribute, src) {
+    toggleButtonGroup();
     const element = document.getElementById(attribute);
     if (src) {
         element.src = src;
@@ -12,6 +13,7 @@ function changeAttribute(attribute, src) {
 }
 
 function applyPreset(preset) {
+    toggleButtonGroup();
     if (currentPreset === preset) {
         // If the preset is already applied, reset to default
         resetToDefault();
@@ -48,4 +50,33 @@ function toggleButtonGroup() {
         buttonGroupContainer.classList.remove('hidden');
     }
     isButtonGroupVisible = !isButtonGroupVisible;
+}
+
+// Mouse movement background scroll
+document.getElementById('interactive-container').addEventListener('mousemove', function(e) {
+    const container = this;
+    const rect = container.getBoundingClientRect();
+    const x = e.clientX - rect.left; // Mouse X position within container
+    const y = e.clientY - rect.top;  // Mouse Y position within container
+    const width = rect.width;
+    const height = rect.height;
+
+    // Calculate the background position percentage
+    const bgX = (x / width) * 100;
+    const bgY = (y / height) * 100;
+
+    // Update background position
+    container.style.backgroundPosition = `${bgX}% ${bgY}%`;
+});
+
+
+function downloadImage() {
+  const container = document.getElementById('interactive-container');
+  
+  html2canvas(container).then(function(canvas) {
+      const link = document.createElement('a');
+      link.href = canvas.toDataURL('image/png');
+      link.download = 'interactive-digital-painting.png';
+      link.click();
+  });
 }

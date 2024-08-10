@@ -11,6 +11,11 @@ body {
   position: relative;
   width: auto;
   height: 95vh; /* Base image height relative to screen height */
+  overflow: hidden;
+  background-image: url('../src/BG.jpg'); /* Background image */
+  background-size: cover;
+  background-position: center;
+  aspect-ratio: 1/1; /* Maintain 1:1 ratio */
 }
 
 .image-container {
@@ -101,4 +106,18 @@ body {
 
 .floating-buttons button:hover {
   background-color: #0056b3;
+}
+#download-button {
+  margin-top: 1vh; /* Add space above download button */
+  padding: 1.5vh 3vh; /* Padding relative to screen height */
+  background-color: #28a745; /* Green color */
+  color: white;
+  border: none;
+  border-radius: 0.5vh; /* Border radius relative to screen height */
+  cursor: pointer;
+  font-size: 2vh; /* Font size relative to screen height */
+}
+
+#download-button:hover {
+  background-color: #218838;
 }
