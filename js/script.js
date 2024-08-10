@@ -71,6 +71,7 @@ document.getElementById('interactive-container').addEventListener('mousemove', f
 
 
 function downloadImage() {
+  toggleButtonGroup();
   const container = document.getElementById('interactive-container');
   
   html2canvas(container).then(function(canvas) {
