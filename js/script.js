@@ -69,7 +69,6 @@ document.getElementById('interactive-container').addEventListener('mousemove', f
     container.style.backgroundPosition = `${bgX}% ${bgY}%`;
 });
 
-
 function downloadImage() {
   toggleButtonGroup();
   const container = document.getElementById('interactive-container');
@@ -78,9 +77,17 @@ function downloadImage() {
   // Temporarily hide the button container
   buttonContainer.style.display = 'none';
   
+  // Get the dimensions of the container
+  const rect = container.getBoundingClientRect();
+  const width = rect.width;
+  const height = rect.height;
+  
   html2canvas(container, { 
       allowTaint: true,
-      useCORS: true
+      useCORS: true,
+      width: width,
+      height: height,
+      scale: window.devicePixelRatio // Adjust scale for high DPI screens
   }).then(function(canvas) {
       const link = document.createElement('a');
       link.href = canvas.toDataURL('image/png');
