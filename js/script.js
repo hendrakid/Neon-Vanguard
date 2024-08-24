@@ -17,6 +17,31 @@ const imagePaths = {
   },
 };
 
+// Mapping of transition videos
+const videoPaths = {
+  body: "src/transition_body.webm",
+  head: "src/transition_head.webm",
+};
+
+function preload() {
+  console.log("start preload " + new Date().toLocaleTimeString());
+  for (const key in imagePaths) {
+    for (const value in imagePaths[key]) {
+      const img = new Image();
+      img.src = imagePaths[key][value];
+    }
+  }
+  for (const key in videoPaths) {
+    const video = document.createElement("video");
+    video.src = videoPaths[key];
+    video.load(); // Preload the video
+  }
+  console.log("finish preload " + new Date().toLocaleTimeString());
+}
+// Preload images and videos on page load
+window.onload = function () {
+  preload();
+};
 // Function to change an attribute (body or head)
 function changeAttribute(attribute, newValue) {
   toggleButtonGroup();
