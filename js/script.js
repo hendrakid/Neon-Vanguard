@@ -89,8 +89,8 @@ window.onload = function () {
 };
 
 // Function to change an attribute (body or head)
-function changeAttribute(attribute, newValue) {
-  toggleButtonGroup();
+function changeAttribute(attribute, newValue, isToggleButtonGroup = true) {
+  if (isToggleButtonGroup) toggleButtonGroup();
 
   if (isTransitioning) {
     console.warn("Transition in progress. Please wait.");
@@ -264,12 +264,14 @@ function applyPreset(preset) {
   }
 
   if (currentBody === mappings.body && currentHead === mappings.head) {
-    changeAttribute("body", mappings.body);
-    changeAttribute("head", mappings.head);
+    changeAttribute("body", mappings.body, false);
+    changeAttribute("head", mappings.head, false);
   } else {
     // Apply the preset by changing body and head attributes
-    if (currentBody !== mappings.body) changeAttribute("body", mappings.body);
-    if (currentHead !== mappings.head) changeAttribute("head", mappings.head);
+    if (currentBody !== mappings.body)
+      changeAttribute("body", mappings.body, false);
+    if (currentHead !== mappings.head)
+      changeAttribute("head", mappings.head, false);
   }
 }
 
