@@ -76,11 +76,13 @@ function preloadVideos() {
 // Preload images and videos on page load
 window.onload = function () {
   const container = document.getElementById("interactive-container");
-  container.style.display = "none"; // Hide container initially
+  // container.style.display = "none"; // Hide container initially
+  container.style.opacity = 0;
 
   Promise.all([preloadImages(), preloadVideos()]).then(() => {
     preloadComplete = true;
-    container.style.display = "block"; // Show container once preloading is complete
+    // container.style.display = "block"; // Show container once preloading is complete
+    container.style.opacity = 1; // Show container once preloading is complete
 
     console.log("finish preload " + new Date().toLocaleTimeString());
   });

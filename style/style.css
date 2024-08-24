@@ -15,8 +15,7 @@ body {
   background-image: url("../src/BG.jpg"); /* Background image */
   background-size: cover;
   background-position: center;
-  display: "none"; /*set default hidden*/
-  transition: opacity 0.5s ease-in;
+  opacity: 0;
   /*aspect-ratio: 1/1; /* Maintain 1:1 ratio  */
 }
 
