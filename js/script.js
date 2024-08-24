@@ -15,6 +15,10 @@ const imagePaths = {
     helmet: "src/helmet.png",
     hat: "src/hat.png",
   },
+  other: {
+    body: "src/body.png",
+    background: "src/BG.jpg",
+  },
 };
 
 // Mapping of transition videos
@@ -29,12 +33,14 @@ function preload() {
     for (const value in imagePaths[key]) {
       const img = new Image();
       img.src = imagePaths[key][value];
+      console.log(value + " loaded");
     }
   }
   for (const key in videoPaths) {
     const video = document.createElement("video");
     video.src = videoPaths[key];
     video.load(); // Preload the video
+    console.log(key + " loaded");
   }
   console.log("finish preload " + new Date().toLocaleTimeString());
 }
