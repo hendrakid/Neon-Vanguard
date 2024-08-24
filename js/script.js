@@ -63,11 +63,9 @@ function changeAttribute(attribute, newValue) {
     newValue,
     () => {
       // Update the current state
-      if (attribute === "body") {
-        currentBody = newValue;
-      } else {
-        currentHead = newValue;
-      }
+      if (attribute === "body") currentBody = newValue;
+      else currentHead = newValue;
+
       // Clear the transitioning flag
       isTransitioning = false;
     },
@@ -85,16 +83,6 @@ function setImage(attribute, newValue) {
     element.style.display = "none";
   }
 }
-
-// if armor   to clothes  show image onstart
-// if armor   to null     show image onended
-// if null    to armor    show image onended
-// if clothes to armor    show image onended
-
-// if helmet  to hat      show image onstart
-// if helmet  to null     show image onended
-// if null    to helmet   show image onended
-// if hat     to helmet   show image onended
 
 // Function to play a transition video and execute a callback afterward
 function playTransition(
@@ -127,7 +115,7 @@ function playTransition(
       const stepBackward = () => {
         if (videoElement.currentTime > 0) {
           videoElement.currentTime = Math.max(
-            videoElement.currentTime - 0.033,
+            videoElement.currentTime - 0.075,
             0
           ); // Move back one frame (approximately 33ms for 30fps)
           videoElement.requestVideoFrameCallback(() => {
@@ -138,7 +126,9 @@ function playTransition(
         } else {
           if (!setImageOnStart) setImage(attribute, value);
           videoElement.pause();
-          videoElement.style.display = "none"; // Hide the video element
+          setTimeout(() => {
+            videoElement.style.display = "none";
+          }, 50); // Hide the video element
           callback(); // Execute callback after reverse playback
         }
       };
@@ -151,7 +141,9 @@ function playTransition(
       videoElement.onended = function () {
         if (!setImageOnStart) setImage(attribute, value);
         videoElement.pause();
-        videoElement.style.display = "none";
+        setTimeout(() => {
+          videoElement.style.display = "none";
+        }, 50);
 
         callback();
       };
@@ -200,11 +192,6 @@ function applyPreset(preset) {
     return;
   }
 
-  // if (currentBody === mappings.body && currentHead === mappings.head) {
-  //   changeAttribute("body", null);
-  //   changeAttribute("head", null);
-  // }
-
   if (currentBody === mappings.body && currentHead === mappings.head) {
     changeAttribute("body", mappings.body);
     changeAttribute("head", mappings.head);
@@ -249,11 +236,13 @@ function toggleButtonGroup() {
 function downloadImage() {
   const container = document.getElementById("interactive-container");
   const buttonContainer = document.getElementById("button-container");
-  const transitionVideo = document.getElementById("transition-video");
+  const transitionBodyVideo = document.getElementById("transition-body-video");
+  const transitionHeadVideo = document.getElementById("transition-head-video");
 
   // Temporarily hide the button group and transition video to exclude them from the screenshot
   buttonContainer.style.display = "none";
-  transitionVideo.style.display = "none";
+  transitionBodyVideo.style.display = "none";
+  transitionHeadVideo.style.display = "none";
 
   // Use html2canvas to capture the container
   html2canvas(container, {

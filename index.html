@@ -22,14 +22,18 @@
   <body>
     <div class="container" id="interactive-container">
       <div class="image-container">
-        <img id="base-body" src="src/body.png" alt="Base Body" class="image" />
+        <img
+          id="base-body"
+          src="src/body.png"
+          alt="Base Body"
+          class="image base"
+        />
         <img id="body" alt="Body" class="image overlay" />
         <img id="head" alt="Head" class="image overlay" />
         <!-- Transition Video Element -->
-        <video id="transition-body-video" class="image overlay"></video>
-        <video id="transition-head-video" class="image overlay"></video>
+        <video id="transition-body-video" class="image overlay base"></video>
+        <video id="transition-head-video" class="image overlay base"></video>
       </div>
-
 
       <div class="floating-buttons" id="button-container">
         <div class="collapse-button">
