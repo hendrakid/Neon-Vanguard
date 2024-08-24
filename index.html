@@ -7,12 +7,14 @@
     <link rel="stylesheet" href="style/style.css" />
 </head>
 <body>
+    
     <div class="container" id="interactive-container">
         <div class="image-container">
             <img id="base-body" src="src/body.png" alt="Base Body" class="image" />
             <img id="body" alt="Body" class="image overlay" />
             <img id="head" alt="Head" class="image overlay" />
         </div>
+        <video id="transition-video" class="overlay" src="src/Comp.mov" style="display: none;"></video>
         <div class="floating-buttons" id="button-container">
             <div class="collapse-button">
                 <button onclick="toggleButtonGroup()">&#9776;</button>
@@ -33,13 +35,10 @@
                     <button onclick="changeAttribute('head', 'src/helmet.png')">Helmet</button>
                     <button onclick="changeAttribute('head', 'src/hat.png')">Hat</button>
                 </div>
-                <div class="button-group">
-                    <button onclick="downloadImage()">Download Image</button>
-                </div>
             </div>
         </div>
     </div>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
     <script src="js/script.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
 </body>
 </html>
