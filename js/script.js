@@ -305,6 +305,7 @@ function toggleButtonGroup() {
 
 // Function to download the current state of the container as an image
 function downloadImage() {
+  toggleButtonGroup();
   const container = document.getElementById("interactive-container");
   const buttonContainer = document.getElementById("button-container");
   const transitionBodyVideo = document.getElementById("transition-body-video");
