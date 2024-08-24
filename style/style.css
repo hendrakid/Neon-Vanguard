@@ -12,9 +12,11 @@ body {
   width: auto;
   height: 95vh; /* Maintain height relative to screen height */
   overflow: hidden;
-  background-image: url('../src/BG.jpg'); /* Background image */
+  background-image: url("../src/BG.jpg"); /* Background image */
   background-size: cover;
   background-position: center;
+  display: "none"; /*set default hidden*/
+  transition: opacity 0.5s ease-in;
   /*aspect-ratio: 1/1; /* Maintain 1:1 ratio  */
 }
 
@@ -64,11 +66,16 @@ body {
   display: flex;
   flex-direction: column;
   margin-top: 1vh;
-  background-color: rgba(255, 255, 255, 0.9); /* Semi-transparent white background */
+  background-color: rgba(
+    255,
+    255,
+    255,
+    0.9
+  ); /* Semi-transparent white background */
   border-radius: 1vh; /* Rounded corners relative to screen height */
   padding: 2vh; /* Padding inside the button group */
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Subtle shadow for depth */
-  
+
   /* Animation */
   max-height: 100vh; /* Large enough to cover all content */
   overflow: hidden;
