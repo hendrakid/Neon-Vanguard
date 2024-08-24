@@ -1,44 +1,67 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
+  <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Interactive Digital Painting</title>
     <link rel="stylesheet" href="style/style.css" />
-</head>
-<body>
-    
+    <style>
+      /* Style for the transition video to overlay the container */
+      #transition-video {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        display: none; /* Hidden by default */
+        z-index: 10; /* Ensure it overlays other elements */
+      }
+    </style>
+  </head>
+  <body>
     <div class="container" id="interactive-container">
-        <div class="image-container">
-            <img id="base-body" src="src/body.png" alt="Base Body" class="image" />
-            <img id="body" alt="Body" class="image overlay" />
-            <img id="head" alt="Head" class="image overlay" />
+      <div class="image-container">
+        <img id="base-body" src="src/body.png" alt="Base Body" class="image" />
+        <img id="body" alt="Body" class="image overlay" />
+        <img id="head" alt="Head" class="image overlay" />
+        <!-- Transition Video Element -->
+        <video id="transition-video" class="image overlay"></video>
+      </div>
+
+
+      <div class="floating-buttons" id="button-container">
+        <div class="collapse-button">
+          <button onclick="toggleButtonGroup()">&#9776;</button>
         </div>
-        <video id="transition-video" class="overlay" src="src/Comp.mov" style="display: none;"></video>
-        <div class="floating-buttons" id="button-container">
-            <div class="collapse-button">
-                <button onclick="toggleButtonGroup()">&#9776;</button>
-            </div>
-            <div id="button-group-container" class="button-group-container hidden">
-                <div class="button-group">
-                    <p>Presets:</p>
-                    <button onclick="applyPreset('casual')">Casual</button>
-                    <button onclick="applyPreset('suit')">Battle Mode</button>
-                </div>
-                <div class="button-group">
-                    <p>Body:</p>
-                    <button onclick="changeAttribute('body', 'src/armor.png')">Armor</button>
-                    <button onclick="changeAttribute('body', 'src/clothes.png')">Clothes</button>
-                </div>
-                <div class="button-group">
-                    <p>Head:</p>
-                    <button onclick="changeAttribute('head', 'src/helmet.png')">Helmet</button>
-                    <button onclick="changeAttribute('head', 'src/hat.png')">Hat</button>
-                </div>
-            </div>
+        <div id="button-group-container" class="button-group-container hidden">
+          <div class="button-group">
+            <p>Presets:</p>
+            <button onclick="applyPreset('casual')">Casual</button>
+            <button onclick="applyPreset('suit')">Battle Mode</button>
+          </div>
+          <div class="button-group">
+            <p>Body:</p>
+            <button onclick="changeAttribute('body', 'armor')">Armor</button>
+            <button onclick="changeAttribute('body', 'clothes')">
+              Clothes
+            </button>
+          </div>
+          <div class="button-group">
+            <p>Head:</p>
+            <button onclick="changeAttribute('head', 'helmet')">Helmet</button>
+            <button onclick="changeAttribute('head', 'hat')">Hat</button>
+          </div>
+          <div class="button-group">
+            <button onclick="downloadImage()">Download Image</button>
+          </div>
         </div>
+      </div>
     </div>
-    <script src="js/script.js"></script>
+
+    <!-- Include html2canvas Library -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
-</body>
+    <!-- Include Custom Script -->
+    <script src="js/script.js"></script>
+  </body>
 </html>
