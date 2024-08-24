@@ -1,4 +1,5 @@
 // Track current active states
+let currentPreset = null; // Can be 'suit' or 'casual'
 let currentBody = null; // Can be 'armor' or 'clothes'
 let currentHead = null; // Can be 'helmet' or 'hat'
 let isButtonGroupVisible = false;
@@ -36,7 +37,7 @@ function changeAttribute(attribute, newValue) {
   let reverse = currentValue === "armor" || currentValue === "helmet";
 
   // Set the transitioning flag
-  isTransitioning = true;
+  // isTransitioning = true; // comment for multiple transition
   let setImageOnStart = false;
   let hasTransition = true;
   if (currentValue === newValue && reverse) {
@@ -109,7 +110,9 @@ function playTransition(
     callback();
     return;
   }
-  const videoElement = document.getElementById("transition-video");
+  const videoElement = document.getElementById(
+    "transition-" + attribute + "-video"
+  );
   const videoSrc = "src/transition_" + attribute + ".webm";
 
   if (videoElement.src !== videoSrc) videoElement.src = videoSrc;
@@ -120,6 +123,7 @@ function playTransition(
       videoElement.pause();
       videoElement.currentTime = videoElement.duration; // Start at the end
 
+      let frame = 0;
       const stepBackward = () => {
         if (videoElement.currentTime > 0) {
           videoElement.currentTime = Math.max(
@@ -128,24 +132,26 @@ function playTransition(
           ); // Move back one frame (approximately 33ms for 30fps)
           videoElement.requestVideoFrameCallback(() => {
             stepBackward(); // Call next frame
+            if (frame === 1) if (setImageOnStart) setImage(attribute, value);
+            frame++;
           });
         } else {
-          videoElement.style.display = "none"; // Hide the video element
           if (!setImageOnStart) setImage(attribute, value);
+          videoElement.pause();
+          videoElement.style.display = "none"; // Hide the video element
           callback(); // Execute callback after reverse playback
         }
       };
 
       stepBackward(); // Start the reverse playback loop
-      if (setImageOnStart) setImage(attribute, value);
     } else {
       videoElement.play();
 
       // When the video ends, hide it and execute the callback
       videoElement.onended = function () {
+        if (!setImageOnStart) setImage(attribute, value);
         videoElement.pause();
         videoElement.style.display = "none";
-        if (!setImageOnStart) setImage(attribute, value);
 
         callback();
       };
@@ -194,9 +200,19 @@ function applyPreset(preset) {
     return;
   }
 
-  // Apply the preset by changing body and head attributes
-  changeAttribute("body", mappings.body);
-  changeAttribute("head", mappings.head);
+  // if (currentBody === mappings.body && currentHead === mappings.head) {
+  //   changeAttribute("body", null);
+  //   changeAttribute("head", null);
+  // }
+
+  if (currentBody === mappings.body && currentHead === mappings.head) {
+    changeAttribute("body", mappings.body);
+    changeAttribute("head", mappings.head);
+  } else {
+    // Apply the preset by changing body and head attributes
+    if (currentBody !== mappings.body) changeAttribute("body", mappings.body);
+    if (currentHead !== mappings.head) changeAttribute("head", mappings.head);
+  }
 }
 
 // Function to toggle the visibility of the button group
