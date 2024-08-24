@@ -4,6 +4,7 @@ let currentBody = null; // Can be 'armor' or 'clothes'
 let currentHead = null; // Can be 'helmet' or 'hat'
 let isButtonGroupVisible = false;
 let isTransitioning = false; // Prevent overlapping transitions
+let preloadComplete = false; // Flag to check if preloading is complete
 
 // Mapping of attributes to their image sources
 const imagePaths = {
@@ -27,27 +28,64 @@ const videoPaths = {
   head: "src/transition_head.webm",
 };
 
-function preload() {
+// Function to preload images
+function preloadImages() {
   console.log("start preload " + new Date().toLocaleTimeString());
-  for (const key in imagePaths) {
-    for (const value in imagePaths[key]) {
-      const img = new Image();
-      img.src = imagePaths[key][value];
-      console.log(value + " loaded");
+  return new Promise((resolve) => {
+    let loadedImages = 0;
+    const totalImages = Object.values(imagePaths).flat().length;
+
+    for (const key in imagePaths) {
+      for (const value in imagePaths[key]) {
+        const img = new Image();
+        img.src = imagePaths[key][value];
+        img.onload = () => {
+          loadedImages++;
+          if (loadedImages === totalImages) resolve();
+        };
+        img.onerror = () => {
+          loadedImages++;
+          if (loadedImages === totalImages) resolve();
+        };
+      }
     }
-  }
-  for (const key in videoPaths) {
-    const video = document.createElement("video");
-    video.src = videoPaths[key];
-    video.load(); // Preload the video
-    console.log(key + " loaded");
-  }
-  console.log("finish preload " + new Date().toLocaleTimeString());
+  });
 }
+
+// Function to preload videos
+function preloadVideos() {
+  return new Promise((resolve) => {
+    let loadedVideos = 0;
+    const totalVideos = Object.keys(videoPaths).length;
+
+    for (const key in videoPaths) {
+      const video = document.createElement("video");
+      video.src = videoPaths[key];
+      video.onloadeddata = () => {
+        loadedVideos++;
+        if (loadedVideos === totalVideos) resolve();
+      };
+      video.onerror = () => {
+        loadedVideos++;
+        if (loadedVideos === totalVideos) resolve();
+      };
+    }
+  });
+}
+
 // Preload images and videos on page load
 window.onload = function () {
-  preload();
+  const container = document.getElementById("interactive-container");
+  container.style.display = "none"; // Hide container initially
+
+  Promise.all([preloadImages(), preloadVideos()]).then(() => {
+    preloadComplete = true;
+    container.style.display = "block"; // Show container once preloading is complete
+
+    console.log("finish preload " + new Date().toLocaleTimeString());
+  });
 };
+
 // Function to change an attribute (body or head)
 function changeAttribute(attribute, newValue) {
   toggleButtonGroup();
@@ -287,6 +325,5 @@ function downloadImage() {
 
     // Restore the visibility of the button group and transition video
     buttonContainer.style.display = "block";
-    transitionVideo.style.display = "none"; // Ensure it's hidden
   });
 }
