@@ -312,7 +312,7 @@ function downloadImage() {
   const transitionHeadVideo = document.getElementById("transition-head-video");
 
   // Temporarily hide the button group and transition video to exclude them from the screenshot
-  buttonContainer.style.display = "none";
+  buttonContainer.style.opacity = 0;
   transitionBodyVideo.style.display = "none";
   transitionHeadVideo.style.display = "none";
 
@@ -327,6 +327,6 @@ function downloadImage() {
     link.click();
 
     // Restore the visibility of the button group and transition video
-    buttonContainer.style.display = "block";
+    buttonContainer.style.opacity = 1;
   });
 }
