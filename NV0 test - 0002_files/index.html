@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<!-- saved from url=(0174)https://assets.objkt.media/file/assets-003/QmPagyGp1BWHj3sqew7WkxzQ61SjSaM9RYmRTzwfiLsWcx/artifact/index.html?objkt=1&creator=tz1ftYUEJkHvxp5a1Uwph7MSj9w95uc7nJPF&viewer=null -->
+<html lang="en"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Interactive Digital Painting</title>
+    <link rel="stylesheet" href="./style.css">
+    <style>
+      /* Style for the transition video to overlay the container */
+      #transition-video {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        display: none; /* Hidden by default */
+        z-index: 10; /* Ensure it overlays other elements */
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container" id="interactive-container" style="opacity: 1;">
+      <div class="image-container">
+        <img id="base-body" src="./body.webp" alt="Base Body" class="image">
+        <img id="body" alt="Body" class="image overlay">
+        <img id="head" alt="Head" class="image overlay">
+        <!-- Transition Video Element -->
+        <video id="transition-body-video" class="image overlay"></video>
+        <video id="transition-head-video" class="image overlay"></video>
+      </div>
+
+      <div class="floating-buttons" id="button-container">
+        <div class="collapse-button">
+          <button onclick="toggleButtonGroup()">☰</button>
+        </div>
+        <div id="button-group-container" class="button-group-container hidden">
+          <div class="button-group">
+            <p>Presets:</p>
+            <button onclick="applyPreset(&#39;casual&#39;)">Casual</button>
+            <button onclick="applyPreset(&#39;suit&#39;)">Battle Mode</button>
+          </div>
+          <div class="button-group">
+            <p>Body:</p>
+            <button onclick="changeAttribute(&#39;body&#39;, &#39;armor&#39;)">Armor</button>
+            <button onclick="changeAttribute(&#39;body&#39;, &#39;clothes&#39;)">
+              Clothes
+            </button>
+          </div>
+          <div class="button-group">
+            <p>Head:</p>
+            <button onclick="changeAttribute(&#39;head&#39;, &#39;helmet&#39;)">Helmet</button>
+            <button onclick="changeAttribute(&#39;head&#39;, &#39;hat&#39;)">Hat</button>
+          </div>
+          <div class="button-group">
+            <button onclick="downloadImage()">Download Image</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Include html2canvas Library -->
+    <script src="./html2canvas.min.js.download"></script>
+    <!-- Include Custom Script -->
+    <script src="./script.js.download"></script>
+  
+
+</body></html>

@@ -5,17 +5,17 @@ body {
   height: 100vh;
   margin: 0;
   background-color: #f0f0f0;
-  background-image: url("../src/BG.jpg"); /* Background image */
-  background-size: cover;
-  background-position: center;
 }
 
 .container {
+  position: relative;
   width: auto;
-  height: 100%; /* Maintain height relative to screen height */
+  height: 95vh; /* Maintain height relative to screen height */
   overflow: hidden;
+  background-image: url("../src/BG.webp"); /* Background image */
+  background-size: cover;
+  background-position: center;
   opacity: 0;
-  /* background-color: #f0f0f0; */
   /*aspect-ratio: 1/1; /* Maintain 1:1 ratio  */
 }
 
