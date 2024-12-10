@@ -1,24 +1,29 @@
 # Neon-Vanguard
 
-https://drive.google.com/file/d/172pVYxrBwLqUwLHR4KKUunu-WstmbRXE/view?usp=sharing
+## Usage
+`Use content folder for minting into store`
 
-urutannyo dari bawah ka ateh
+## Traits
+```
 casual mode :
-BG
-karakter+rambut
-clothes
-mouthpiece
-eyewear
-headwear
-crownpiece
+- BG
+- karakter+rambut
+- clothes
+- mouthpiece
+- eyewear
+- headwear
+- crownpiece
 
 battle mode :
-BG
-karakter+rambut
-armor
-helmet-mask
-helmet-visor
-helmet-main
-helmet-crown
+- BG
+- karakter+rambut
+- armor
+- helmet-mask
+- helmet-visor
+- helmet-main
+- helmet-crown
+```
 
-didalam folder ado contoh masing2nyo, + .mov animasi effect henshinnyo
+
+## 🔗 Demo
+[Here!](https://hendrakid.github.io/Neon-Vanguard/)
