@@ -1,7 +1,7 @@
 // Track current active states
-let currentPreset = null; // Can be 'suit' or 'casual'
-let currentBody = null; // Can be 'armor' or 'clothes'
-let currentHead = null; // Can be 'helmet' or 'hat'
+let isAllActive = false; // Can be 'suit' or 'casual'
+let isHeadActive = false; // Can be 'suit' or 'casual'
+let isBodyActive = false; // Can be 'armor' or 'clothes'
 let isButtonGroupVisible = false;
 let isTransitioning = false; // Prevent overlapping transitions
 let preloadComplete = false; // Flag to check if preloading is complete
@@ -9,12 +9,12 @@ let preloadComplete = false; // Flag to check if preloading is complete
 // Mapping of attributes to their image sources
 const imagePaths = {
   body: {
-    armor: "src/armor.png",
-    clothes: "src/clothes.png",
+    armor: "src/body-armor.png",
+    clothes: "./src/body-clothes.png",
   },
   head: {
-    helmet: "src/helmet.png",
-    hat: "src/hat.png",
+    helmet: "src/head-armor.png",
+    hat: "src/head-clothes.png",
   },
   other: {
     body: "src/body.png",
@@ -26,6 +26,7 @@ const imagePaths = {
 const videoPaths = {
   body: "src/transition_body.webm",
   head: "src/transition_head.webm",
+  // aura: "src/aura.webm",
 };
 
 // Function to preload images
@@ -51,7 +52,6 @@ function preloadImages() {
     }
   });
 }
-
 // Function to preload videos
 function preloadVideos() {
   return new Promise((resolve) => {
@@ -85,90 +85,116 @@ window.onload = function () {
     container.style.opacity = 1; // Show container once preloading is complete
 
     console.log("finish preload " + new Date().toLocaleTimeString());
+    setImage("head", false) ;
+    setImage("body", false) ;
   });
 };
 
-// Function to change an attribute (body or head)
-function changeAttribute(attribute, newValue, isToggleButtonGroup = true) {
-  if (isToggleButtonGroup) toggleButtonGroup();
+function toggleAllButtonHandler(element, attribute) {
+  // atribute head / body
 
-  if (isTransitioning) {
-    console.warn("Transition in progress. Please wait.");
-    return;
-  }
+  const currentSrc = element.src;
+  element.classList.remove("on"); // Remove 'on' class
+  element.classList.add("off"); // Remove 'off' class
+  var activated = currentSrc.includes("button-switch-off.png");
+  isAllActive = activated;
+  // Use a small timeout to allow the transition to take effect before changing the image source
+  setTimeout(() => {
+    if (activated) {
+      element.src = "src/button-switch-on.png"; // Change to 'ON' state
+      element.classList.remove("off");
+      element.classList.add("on");
+    } else {
+      element.src = "src/button-switch-off.png"; // Change to 'OFF' state
+      element.classList.remove("on"); // Remove 'on' class
+      element.classList.remove("off"); // Remove 'off' class
+    }
+  }, 100); // Wait for the transition to finish before changing the image
 
-  if (attribute !== "body" && attribute !== "head") {
-    console.error(`Unknown attribute: ${attribute}`);
-    return;
-  }
-
-  let currentValue = attribute === "body" ? currentBody : currentHead;
-
-  // Determine if the video should play in reverse
-  let reverse = currentValue === "armor" || currentValue === "helmet";
-
-  // Set the transitioning flag
-  // isTransitioning = true; // comment for multiple transition
-  let setImageOnStart = false;
-  let hasTransition = true;
-  if (currentValue === newValue && reverse) {
-    // reset
-    // show image onended
-    console.log(" RESET|REVERSE | hide image onstart");
-    newValue = null;
-    setImageOnStart = true;
-  } else if (reverse && (newValue === "clothes" || newValue === "hat")) {
-    console.log(" REVERSE | show image onstart");
-    setImageOnStart = true;
-  } else if (newValue === "armor" || newValue === "helmet") {
-    console.log(" NORMAL | show image onended");
-  } else {
-    console.log("no transition");
-    if (currentValue === newValue) newValue = null;
-    hasTransition = false;
-  }
-  // Play the transition animation with reverse flag
-  playTransition(
-    attribute,
-    hasTransition,
-    newValue,
-    () => {
-      // Update the current state
-      if (attribute === "body") currentBody = newValue;
-      else currentHead = newValue;
-
-      // Clear the transitioning flag
-      isTransitioning = false;
-    },
-    reverse,
-    setImageOnStart
-  );
+  const head = document.getElementById("toggle-img-head");
+  const body = document.getElementById("toggle-img-body");
+  toggleButtonHandler(head, "head", isAllActive);
+  toggleButtonHandler(body, "body", isAllActive);
 }
 
-function setImage(attribute, newValue) {
-  const element = document.getElementById(attribute);
-  if (newValue) {
-    element.src = "src/" + newValue + ".png";
-    element.style.display = "block"; // Show image
-  } else {
-    element.style.display = "none";
+// Function to toggle the image between ON and OFF states with smooth transition
+function toggleButtonHandler(element, attribute, forceCondition = null) {
+  // atribute head / body
+  const currentSrc = element.src;
+  var activated = currentSrc.includes("button-switch-off.png");
+
+  if (forceCondition !== null) {
+    if (attribute === "head") if (isHeadActive === forceCondition) return;
+    if (attribute === "body") if (isBodyActive === forceCondition) return;
+
+    activated = forceCondition;
   }
+
+  if (attribute === "head") isHeadActive = activated;
+  if (attribute === "body") isBodyActive = activated;
+
+  element.classList.remove("on"); // Remove 'on' class
+  element.classList.add("off"); // Remove 'off' class
+
+  // Use a small timeout to allow the transition to take effect before changing the image source
+  setTimeout(() => {
+    if (activated) {
+      element.src = "src/button-switch-on.png"; // Change to 'ON' state
+      element.classList.remove("off");
+      element.classList.add("on");
+    } else {
+      element.src = "src/button-switch-off.png"; // Change to 'OFF' state
+      element.classList.remove("on"); // Remove 'on' class
+      element.classList.remove("off"); // Remove 'off' class
+    }
+  }, 100); // Wait for the transition to finish before changing the image
+
+  if (forceCondition === null) { // null means handle if toggle trigger from individual toggle
+    if (isHeadActive && isBodyActive && !isAllActive) {
+      const toggleAllElement = document.getElementById("toggle-img-all");
+      toggleAllElement.classList.remove("on"); // Remove 'on' class
+      toggleAllElement.classList.add("off"); // Remove 'off' class
+      isAllActive = true;
+      setTimeout(() => {
+        toggleAllElement.src = "src/button-switch-on.png"; // Change to 'ON' state
+        toggleAllElement.classList.remove("off");
+        toggleAllElement.classList.add("on");
+      }, 100); // Wait for the transition to finish before changing the image
+    } else if ((!isHeadActive || !isBodyActive) && isAllActive) {
+      const toggleAllElement = document.getElementById("toggle-img-all");
+      toggleAllElement.classList.remove("on"); // Remove 'on' class
+      toggleAllElement.classList.add("off"); // Remove 'off' class
+      isAllActive = false;
+      setTimeout(() => {
+        toggleAllElement.src = "src/button-switch-off.png"; // Change to 'OFF' state
+        toggleAllElement.classList.remove("on"); // Remove 'on' class
+        toggleAllElement.classList.remove("off"); // Remove 'off' class
+      }, 100); // Wait for the transition to finish before changing the image
+    }
+  }
+
+  // jika activated sudah pasti akan playTransition normal
+  // jika false sudah pasti akan reverse transition, setimage onstart
+
+  // Play the transition animation with reverse flag
+  playTransition(attribute, activated, true, () => {
+    console.log("no call back");
+    // Clear the transitioning flag
+    isTransitioning = false;
+  });
 }
 
 // Function to play a transition video and execute a callback afterward
-function playTransition(
-  attribute,
-  hasTransition,
-  value,
-  callback,
-  reverse = false,
-  setImageOnStart = false
-) {
+function playTransition(attribute, activated, hasTransition, callback) {
+  
+  hideButtonGroup();
+
   if (!hasTransition) {
     setImage(attribute, value);
     callback();
     return;
   }
+
   const videoElement = document.getElementById(
     "transition-" + attribute + "-video"
   );
@@ -178,7 +204,7 @@ function playTransition(
   videoElement.style.display = "block"; // Show the video element
 
   videoElement.onloadedmetadata = function () {
-    if (reverse) {
+    if (!activated) {
       videoElement.pause();
       videoElement.currentTime = videoElement.duration; // Start at the end
 
@@ -191,11 +217,10 @@ function playTransition(
           ); // Move back one frame (approximately 33ms for 30fps)
           videoElement.requestVideoFrameCallback(() => {
             stepBackward(); // Call next frame
-            if (frame === 1) if (setImageOnStart) setImage(attribute, value);
+            if (frame === 1) setImage(attribute, activated);
             frame++;
           });
         } else {
-          if (!setImageOnStart) setImage(attribute, value);
           videoElement.pause();
           setTimeout(() => {
             videoElement.style.display = "none";
@@ -210,7 +235,7 @@ function playTransition(
 
       // When the video ends, hide it and execute the callback
       videoElement.onended = function () {
-        if (!setImageOnStart) setImage(attribute, value);
+        setImage(attribute, activated);
         videoElement.pause();
         setTimeout(() => {
           videoElement.style.display = "none";
@@ -235,79 +260,71 @@ function playTransition(
     callback(); // Proceed even if the video fails
   };
 }
+function setImage(attribute, activated) {
+  const element = document.getElementById(attribute);
 
-// Function to apply a preset (e.g., 'casual' or 'suit')
-function applyPreset(preset) {
-  if (isTransitioning) {
-    console.warn("Transition in progress. Please wait.");
-    return;
-  }
-
-  toggleButtonGroup();
-
-  // Define what each preset applies
-  const presetMappings = {
-    casual: {
-      body: "clothes",
-      head: "hat",
-    },
-    suit: {
-      body: "armor",
-      head: "helmet",
-    },
-  };
-
-  const mappings = presetMappings[preset];
-  if (!mappings) {
-    console.error(`Unknown preset: ${preset}`);
-    return;
-  }
-
-  if (currentBody === mappings.body && currentHead === mappings.head) {
-    changeAttribute("body", mappings.body, false);
-    changeAttribute("head", mappings.head, false);
+  if (activated) {
+    element.src = "src/" + attribute + "-armor.png";
+    element.style.display = "block"; // Show image
   } else {
-    // Apply the preset by changing body and head attributes
-    if (currentBody !== mappings.body)
-      changeAttribute("body", mappings.body, false);
-    if (currentHead !== mappings.head)
-      changeAttribute("head", mappings.head, false);
+    element.src = "src/" + attribute + "-clothes.png";
+    element.style.display = "block"; // Show image
   }
 }
 
-// Function to toggle the visibility of the button group
-function toggleButtonGroup() {
+function showButtonGroup() {
   const buttonGroupContainer = document.getElementById(
     "button-group-container"
   );
-  if (isButtonGroupVisible) {
-    buttonGroupContainer.classList.add("hidden");
-  } else {
-    buttonGroupContainer.classList.remove("hidden");
-  }
-  isButtonGroupVisible = !isButtonGroupVisible;
+  const buttonGroupContainerBackground = document.getElementById(
+    "button-group-container-background"
+  );
+  const collapseButton = document.getElementById("collapse-button");
+
+  buttonGroupContainer.classList.remove("hidden");
+  buttonGroupContainerBackground.classList.remove("hidden");
+  collapseButton.classList.add("hidden");
+
+  // Add event listener for clicks outside the button group
+  document.addEventListener("click", hideButtonGroupOnClickOutside);
 }
 
-// Event listener for mouse movement to scroll the background
-// document.getElementById('interactive-container').addEventListener('mousemove', function (e) {
-//     const container = this;
-//     const rect = container.getBoundingClientRect();
-//     const x = e.clientX - rect.left; // Mouse X position within container
-//     const y = e.clientY - rect.top;  // Mouse Y position within container
-//     const width = rect.width;
-//     const height = rect.height;
+function hideButtonGroup() {
+  const buttonGroupContainer = document.getElementById(
+    "button-group-container"
+  );
+  const buttonGroupContainerBackground = document.getElementById(
+    "button-group-container-background"
+  );
+  const collapseButton = document.getElementById("collapse-button");
 
-//     // Calculate the background position percentage
-//     const bgX = (x / width) * 100;
-//     const bgY = (y / height) * 100;
+  buttonGroupContainer.classList.add("hidden");
+  buttonGroupContainerBackground.classList.add("hidden");
+  collapseButton.classList.remove("hidden");
 
-//     // Update background position
-//     container.style.backgroundPosition = `${bgX}% ${bgY}%`;
-// });
+  // Remove the event listener
+  document.removeEventListener("click", hideButtonGroupOnClickOutside);
+}
+
+function hideButtonGroupOnClickOutside(event) {
+  const buttonGroupContainer = document.getElementById(
+    "button-group-container"
+  );
+  const collapseButton = document.getElementById("collapse-button");
+
+  // Check if the click is outside the button group container
+  if (
+    !buttonGroupContainer.contains(event.target) &&
+    !collapseButton.contains(event.target)
+  ) {
+    hideButtonGroup();
+  }
+}
+
 
 // Function to download the current state of the container as an image
 function downloadImage() {
-  toggleButtonGroup();
+  hideButtonGroup()
   const container = document.getElementById("interactive-container");
   const buttonContainer = document.getElementById("button-container");
   const transitionBodyVideo = document.getElementById("transition-body-video");

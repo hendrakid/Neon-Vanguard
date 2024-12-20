@@ -30,33 +30,65 @@
         <video id="transition-head-video" class="image overlay"></video>
       </div>
 
+      <!-- Floating window -->
       <div class="floating-buttons" id="button-container">
-        <div class="collapse-button">
-          <button onclick="toggleButtonGroup()">&#9776;</button>
+        <div class="collapse-button" id="collapse-button">
+          <img
+            src="src/menu-button.png"
+            alt="Collapse"
+            onclick="showButtonGroup()"
+          />
         </div>
         <div id="button-group-container" class="button-group-container hidden">
-          <div class="button-group">
-            <p>Presets:</p>
-            <button onclick="applyPreset('casual')">Casual</button>
-            <button onclick="applyPreset('suit')">Battle Mode</button>
+          <!-- Menu Button -->
+          <div class="toggle-button">
+            <img class="toggle-button logo" src="src/button-transform.png" />
+            <img
+              id="toggle-img-all"
+              class="toggle-button switch"
+              src="src/button-switch-off.png"
+              onclick="toggleAllButtonHandler(this);"
+            />
           </div>
-          <div class="button-group">
-            <p>Body:</p>
-            <button onclick="changeAttribute('body', 'armor')">Armor</button>
-            <button onclick="changeAttribute('body', 'clothes')">
-              Clothes
-            </button>
+          <div class="toggle-button">
+            <img class="toggle-button logo" src="src/button-headgear.png" />
+            <img
+              id="toggle-img-head"
+              class="toggle-button switch"
+              src="src/button-switch-off.png"
+              onclick="toggleButtonHandler(this, 'head')"
+            />
           </div>
-          <div class="button-group">
-            <p>Head:</p>
-            <button onclick="changeAttribute('head', 'helmet')">Helmet</button>
-            <button onclick="changeAttribute('head', 'hat')">Hat</button>
+          <div class="toggle-button">
+            <img class="toggle-button logo" src="src/button-clothes.png" />
+            <img
+              id="toggle-img-body"
+              class="toggle-button switch"
+              src="src/button-switch-off.png"
+              onclick="toggleButtonHandler(this, 'body')"
+            />
           </div>
-          <div class="button-group">
-            <button onclick="downloadImage()">Download Image</button>
+          <div class="toggle-button">
+            <img class="toggle-button logo" src="src/button-aura.png" />
+            <img
+              class="toggle-button switch"
+              src="src/button-switch-off.png"
+              onclick="toggleButtonHandler(this, 'aura')"
+            />
           </div>
+
+          <div class="middle-bottom-div">
+            <img onclick="downloadImage()" class="toggle-button logo" src="src/button-download.png" />
+          </div>
+          <!-- Menu Button -->
         </div>
+        <div
+          id="button-group-container-background"
+          class="menu-background hidden"
+        ></div>
       </div>
+
+      <!-- Floating window close -->
     </div>
 
     <!-- Include html2canvas Library -->
