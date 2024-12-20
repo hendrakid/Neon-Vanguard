@@ -85,8 +85,9 @@ window.onload = function () {
     container.style.opacity = 1; // Show container once preloading is complete
 
     console.log("finish preload " + new Date().toLocaleTimeString());
-    setImage("head", false) ;
-    setImage("body", false) ;
+    setImage("head", false);
+    setImage("body", false);
+    moveBackground(125);
   });
 };
 
@@ -149,7 +150,8 @@ function toggleButtonHandler(element, attribute, forceCondition = null) {
     }
   }, 100); // Wait for the transition to finish before changing the image
 
-  if (forceCondition === null) { // null means handle if toggle trigger from individual toggle
+  if (forceCondition === null) {
+    // null means handle if toggle trigger from individual toggle
     if (isHeadActive && isBodyActive && !isAllActive) {
       const toggleAllElement = document.getElementById("toggle-img-all");
       toggleAllElement.classList.remove("on"); // Remove 'on' class
@@ -186,7 +188,6 @@ function toggleButtonHandler(element, attribute, forceCondition = null) {
 
 // Function to play a transition video and execute a callback afterward
 function playTransition(attribute, activated, hasTransition, callback) {
-  
   hideButtonGroup();
 
   if (!hasTransition) {
@@ -321,10 +322,60 @@ function hideButtonGroupOnClickOutside(event) {
   }
 }
 
+function moveBackground(value) {
+  const background = document.getElementById("background");
+  const slider = document.getElementById("slider");
+
+  // Get dimensions
+  const bgWidth = background.offsetWidth;
+  const viewportWidth = window.innerWidth;
+
+  // Calculate the maximum allowed movement
+  const maxMovement = (bgWidth - viewportWidth) / 2;
+
+  // Map slider value to range [-maxMovement, maxMovement]
+  const mappedValue = (value / slider.max) * 2 * maxMovement - maxMovement;
+
+  // Clamp the movement value to prevent exceeding boundaries
+  const clampedValue =
+    Math.max(-maxMovement, Math.min(mappedValue, maxMovement)) - maxMovement;
+
+  // Apply translation
+  background.style.transform = `translateX(${clampedValue}px)`;
+  console.log(
+    "bgWidth:",
+    bgWidth,
+    "viewportWidth:",
+    viewportWidth,
+    "maxMovement:",
+    maxMovement,
+    "clampedValue:",
+    clampedValue
+  );
+}
+
+// Event listener for mouse movement to scroll the background
+document
+  .getElementById("background")
+  .addEventListener("mousemove", function (e) {
+    const container = this;
+    const rect = container.getBoundingClientRect();
+    const x = e.clientX - rect.left; // Mouse X position within container
+    const y = e.clientY - rect.top; // Mouse Y position within container
+    const width = rect.width;
+    const height = rect.height;
+
+    // Calculate the background position percentage
+    const bgX = (x / width) * 100;
+    const bgY = (y / height) * 100;
+
+    // Update background position
+    container.style.backgroundPosition = `${bgX}% ${bgY}%`;
+  });
 
 // Function to download the current state of the container as an image
 function downloadImage() {
-  hideButtonGroup()
+  hideButtonGroup();
   const container = document.getElementById("interactive-container");
   const buttonContainer = document.getElementById("button-container");
   const transitionBodyVideo = document.getElementById("transition-body-video");

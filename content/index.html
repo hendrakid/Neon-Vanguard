@@ -21,6 +21,7 @@
   </head>
   <body>
     <div class="container" id="interactive-container">
+      <img id="background" src="src/BG.jpg" class="background" />
       <div class="image-container">
         <img id="base-body" src="src/body.png" alt="Base Body" class="image" />
         <img id="body" alt="Body" class="image overlay" />
@@ -76,9 +77,24 @@
               onclick="toggleButtonHandler(this, 'aura')"
             />
           </div>
-
+          <div class="toggle-button">
+            <input
+              class="toggle-button slider"
+              type="range"
+              id="slider"
+              min="0"
+              max="250"
+              value="125"
+              oninput="moveBackground(this.value)"
+            />
+          </div>
+          
           <div class="middle-bottom-div">
-            <img onclick="downloadImage()" class="toggle-button logo" src="src/button-download.png" />
+            <img
+              onclick="downloadImage()"
+              class="toggle-button logo"
+              src="src/button-download.png"
+            />
           </div>
           <!-- Menu Button -->
         </div>

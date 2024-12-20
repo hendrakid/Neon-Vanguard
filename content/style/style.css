@@ -4,11 +4,22 @@ body {
   align-items: center;
   height: 100vh;
   margin: 0;
-  background-color: #f0f0f0;
-  background-image: url("../src/BG.jpg"); /* Background image */
+  /* background-color: #f0f0f0;
+  background-image: url("../src/BG.jpg");
   background-size: cover;
-  background-position: center;
+  background-position: center; */
 }
+.background {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 200%; /* Allows for visible movement */
+  height: 100%;
+  object-fit: cover;
+  object-position: center;
+  z-index: -1;
+}
+
 
 .container {
   width: auto;
@@ -105,6 +116,12 @@ body {
   margin-right: 10px;
   cursor: pointer;
 }
+.toggle-button.slider {
+  width: 100vw; /* Adjust size of the image */
+  height: 1vw;
+  margin-right: 10px;
+  cursor: pointer;
+}
 
 .toggle-button.switch.off {
   opacity: 0;
@@ -119,7 +136,7 @@ body {
 
 .middle-bottom-div {
   position: absolute;
-  bottom: 10px; /* Adjust this value for desired spacing */
+  bottom: -5px; /* Adjust this value for desired spacing */
   left: 50%;
   transform: translateX(-50%);
   color: white;
