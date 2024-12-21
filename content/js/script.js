@@ -9,18 +9,12 @@ let preloadComplete = false; // Flag to check if preloading is complete
 
 // Mapping of attributes to their image sources
 const imagePaths = {
-  body: {
-    armor: "src/body-armor.png",
-    clothes: "./src/body-clothes.png",
-  },
-  head: {
-    helmet: "src/head-armor.png",
-    hat: "src/head-clothes.png",
-  },
-  other: {
-    body: "src/body.png",
-    background: "src/background.jpg",
-  },
+  bodyArmor: "src/body-armor.png",
+  bodyClothes: "src/body-clothes.png",
+  headArmor: "src/head-armor.png",
+  headClothes: "src/head-clothes.png",
+  bodyBase: "src/body.png",
+  background: "src/background.jpg",
 };
 
 // Mapping of transition videos
@@ -32,24 +26,21 @@ const videoPaths = {
 
 // Function to preload images
 function preloadImages() {
-  console.log("start preload " + new Date().toLocaleTimeString());
   return new Promise((resolve) => {
     let loadedImages = 0;
     const totalImages = Object.values(imagePaths).flat().length;
 
     for (const key in imagePaths) {
-      for (const value in imagePaths[key]) {
-        const img = new Image();
-        img.src = imagePaths[key][value];
-        img.onload = () => {
-          loadedImages++;
-          if (loadedImages === totalImages) resolve();
-        };
-        img.onerror = () => {
-          loadedImages++;
-          if (loadedImages === totalImages) resolve();
-        };
-      }
+      const img = new Image();
+      img.src = imagePaths[key];
+      img.onload = () => {
+        loadedImages++;
+        if (loadedImages === totalImages) resolve();
+      };
+      img.onerror = () => {
+        loadedImages++;
+        if (loadedImages === totalImages) resolve();
+      };
     }
   });
 }
@@ -76,7 +67,9 @@ function preloadVideos() {
 
 // Preload images and videos on page load
 window.onload = function () {
-  const container = document.getElementById("interactive-container");
+  console.log("start preload " + new Date().toLocaleTimeString());
+
+  const container = document.getElementById("container");
   container.style.display = "none"; // Hide container initially
   container.style.opacity = 0;
 
@@ -358,7 +351,7 @@ function moveBackground(value) {
 // Function to download the current state of the container as an image
 function downloadImage() {
   hideButtonGroup();
-  const container = document.getElementById("interactive-container");
+  const container = document.getElementById("container");
   const buttonContainer = document.getElementById("button-container");
   const transitionBodyVideo = document.getElementById("transition-body-video");
   const transitionHeadVideo = document.getElementById("transition-head-video");
@@ -366,6 +359,7 @@ function downloadImage() {
   // Temporarily hide the button group and transition video to exclude them from the screenshot
   transitionBodyVideo.style.display = "none";
   transitionHeadVideo.style.display = "none";
+  buttonContainer.style.opacity = 0;
 
   // Use html2canvas to capture the container
   html2canvas(container, {
@@ -374,9 +368,10 @@ function downloadImage() {
   }).then(function (canvas) {
     const link = document.createElement("a");
     link.href = canvas.toDataURL("image/png");
-    link.download = "interactive-digital-painting.png";
+    link.download = "Neon-Vanguard.png";
     link.click();
 
     // Restore the visibility of the button group and transition video
+    buttonContainer.style.opacity = 1;
   });
 }
