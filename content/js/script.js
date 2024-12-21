@@ -360,7 +360,7 @@ function downloadImage() {
   const buttonContainer = document.getElementById("button-container");
 
   const aura = document.getElementById("aura-video");
-  // aura.style.zIndex = 999;
+  aura.style.zIndex = 999;
   // Temporarily hide the button group and transition video to exclude them from the screenshot
   buttonContainer.style.opacity = 0;
 
@@ -379,6 +379,6 @@ function downloadImage() {
 
     // Restore the visibility of the button group and transition video
     buttonContainer.style.opacity = 1;
-    // aura.style.zIndex = 14;
+    aura.style.zIndex = 14;
   });
 }
