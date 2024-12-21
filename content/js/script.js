@@ -74,8 +74,8 @@ window.onload = function () {
   container.style.display = "none"; // Hide container initially
   container.style.opacity = 0;
 
-  const loading = document.getElementById("loading");
-  loading.src = "src/loading.webp";
+  const loading = document.getElementById("loading-video");
+  loading.src = "src/aura.webm";
   loading.style.opacity = 1;
 
   Promise.all([preloadImages(), preloadVideos()]).then(() => {
@@ -353,31 +353,31 @@ function moveBackground(value) {
   background.style.transform = `translateX(${clampedValue}px)`;
 }
 
-// Function to download the current state of the container as an image
-function downloadImage() {
-  hideButtonGroup();
-  const container = document.getElementById("container");
-  const buttonContainer = document.getElementById("button-container");
+// // Function to download the current state of the container as an image
+// function downloadImage() {
+//   hideButtonGroup();
+//   const container = document.getElementById("container");
+//   const buttonContainer = document.getElementById("button-container");
 
-  // Temporarily hide the button group and transition video to exclude them from the screenshot
-  buttonContainer.style.opacity = 0;
+//   // Temporarily hide the button group and transition video to exclude them from the screenshot
+//   buttonContainer.style.opacity = 0;
 
-  // Use html2canvas to capture the container
-  html2canvas(container, {
-    allowTaint: true,
-    useCORS: true,
-  }).then(function (canvas) {
-    const ctx = canvas.getContext("2d");
+//   // Use html2canvas to capture the container
+//   html2canvas(container, {
+//     allowTaint: true,
+//     useCORS: true,
+//   }).then(function (canvas) {
+//     const ctx = canvas.getContext("2d");
 
-    const aura = document.getElementById("aura-video");
-    ctx.drawImage(aura, 0, 0, canvas.width, canvas.height);
+//     const aura = document.getElementById("aura-video");
+//     ctx.drawImage(aura, 0, 0, canvas.width, canvas.height);
 
-    const link = document.createElement("a");
-    link.href = canvas.toDataURL("image/png");
-    link.download = "Neon-Vanguard.png";
-    link.click();
+//     const link = document.createElement("a");
+//     link.href = canvas.toDataURL("image/png");
+//     link.download = "Neon-Vanguard.png";
+//     link.click();
 
-    // Restore the visibility of the button group and transition video
-    buttonContainer.style.opacity = 1;
-  });
-}
+//     // Restore the visibility of the button group and transition video
+//     buttonContainer.style.opacity = 1;
+//   });
+// }

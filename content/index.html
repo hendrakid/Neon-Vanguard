@@ -4,8 +4,174 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Interactive Digital Painting</title>
-    <link rel="stylesheet" href="style/style.css" />
-    <style>
+    <style crossorigin="">
+      body {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 100vh;
+        margin: 0;
+        /* background-color: #f0f0f0;
+        background-image: url("../src/BG.jpg");
+        background-size: cover;
+        background-position: center; */
+      }
+      .background {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: auto;
+        height: 100%;
+        object-fit: cover;
+        object-position: center;
+        z-index: -1;
+      }
+
+      .container {
+        width: 100%;
+        height: 100%;
+        overflow: hidden;
+        opacity: 0;
+        /* background-color: #f0f0f0; */
+      }
+
+      .image-container {
+        position: relative;
+        width: auto;
+        height: 100%;
+        object-position: center;
+      }
+
+      .image {
+        width: auto;
+        height: 100%;
+        object-fit: contain; /* Preserve aspect ratio */
+      }
+
+      .overlay {
+        position: absolute;
+        top: 0;
+        left: 50%;
+        transform: translateX(-50%);
+        max-width: "100%";
+        right: auto;
+      }
+      .floating-buttons {
+        position: absolute;
+        top: 2vh; /* Adjust top position relative to screen height */
+        right: 2vh; /* Adjust right position relative to screen height */
+        display: flex;
+        flex-direction: column;
+        align-items: flex-end;
+        z-index: 999;
+      }
+
+      /* Button group container styles */
+      .button-group-container {
+        width: 50vw;
+        height: 50vw;
+        max-width: 2000px;
+        max-height: 2000px;
+        min-width: 100px;
+        min-height: 100px;
+        background-image: url("./src/UI/menu-box.png");
+        background-size: cover;
+        background-position: center;
+        background-repeat: no-repeat;
+        border-radius: 10px;
+        padding-top: 15%;
+        padding-left: 5%;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+        display: flex;
+        flex-direction: column;
+        gap: 1vw;
+        overflow: hidden;
+        z-index: 1000; /* Ensure it's above other elements */
+      }
+
+      /* Adjust button-group-container for better interaction */
+      .button-group-container {
+        position: relative; /* Adjust as needed */
+      }
+      .menu-background {
+        position: fixed; /* Fixed to cover the entire viewport */
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background-color: rgba(0, 0, 0, 0.5); /* Semi-transparent black */
+      }
+
+      /* Style for the toggle button */
+      .toggle-button {
+        display: flex;
+        align-items: center;
+        gap: 10px; /* Adjust space between image and label */
+        font-size: 1.5vw;
+      }
+      .toggle-button.logo {
+        width: 30vw; /* Adjust size of the image */
+        height: auto;
+      }
+      .toggle-button.switch {
+        transition: opacity 0.3s ease, transform 0.3s ease; /* Add smooth transition */
+        width: auto; /* Adjust size of the image */
+        height: 5vw;
+        margin-right: 10px;
+        cursor: pointer;
+      }
+      .toggle-button.slider {
+        width: 100vw; /* Adjust size of the image */
+        height: 1vw;
+        margin-right: 10px;
+        cursor: pointer;
+      }
+
+      .toggle-button.switch.off {
+        opacity: 0;
+      }
+
+      .toggle-button.switch.on {
+        opacity: 1;
+        transform: scale(1.1); /* Optional: slight scale effect */
+      }
+
+      .middle-bottom-div {
+        position: absolute;
+        bottom: -5px; /* Adjust this value for desired spacing */
+        left: 50%;
+        transform: translateX(-50%);
+        color: white;
+        padding: 5px 10px;
+        border-radius: 5px;
+        text-align: center;
+        cursor: pointer;
+      }
+
+      .collapse-button img {
+        width: 5vh; /* Adjust width relative to screen height */
+        height: auto; /* Maintain aspect ratio */
+        cursor: pointer;
+      }
+      .collapse-button img:hover {
+        opacity: 0.8; /* Slightly fade on hover for a hover effect */
+      }
+      .collapse-button button {
+        padding: 1.5vh 3vh; /* Padding relative to screen height */
+        background-color: #007bff;
+        color: white;
+        border: none;
+        border-radius: 0.5vh; /* Border radius relative to screen height */
+        cursor: pointer;
+        font-size: 2vh; /* Font size relative to screen height */
+      }
+      .collapse-button button:hover {
+        background-color: #0056b3;
+      }
+      /* Ensure collapse-button hides when button-group-container is visible */
+      .hidden {
+        display: none;
+      }
       .loading {
         transition: opacity 0.3s ease, transform 0.3s ease; /* Add smooth transition */
         position: relative;
@@ -20,76 +186,75 @@
     </style>
   </head>
   <body>
-    <img id="loading" class="loading" />
+    <video id="loading-video" class="loading" crossorigin="anonymous"></video>
     <div class="container" id="container">
-      <img id="background" class="background" />
+      <img id="background" class="background" crossorigin="anonymous" />
       <div class="image-container">
-        <img id="base-body" class="image overlay" style="z-index: 1" />
-        <img id="body" class="image overlay" style="z-index: 2" />
-        <img id="head" class="image overlay" style="z-index: 3" />
+        <img id="base-body" class="image overlay" crossorigin="anonymous" />
+        <img id="body" class="image overlay" crossorigin="anonymous" />
+        <img id="head" class="image overlay" crossorigin="anonymous" />
         <!-- Transition Video Element -->
         <video
           id="aura-video"
           class="image overlay"
-          style="z-index: 14"
           loop
+          crossorigin="anonymous"
         ></video>
         <video
           id="transition-body-video"
           class="image overlay"
-          style="z-index: 12"
+          crossorigin="anonymous"
         ></video>
         <video
           id="transition-head-video"
           class="image overlay"
-          style="z-index: 13"
+          crossorigin="anonymous"
         ></video>
       </div>
 
       <!-- Floating window -->
       <div class="floating-buttons" id="button-container">
         <div class="collapse-button" id="collapse-button">
-          <img
-            src="src/UI/menu-button.png"
-            alt="Collapse"
-            onclick="showButtonGroup()"
-          />
+          <img id="menu-toggle" src="./src/UI/menu-button.png" alt="Collapse" />
         </div>
         <div id="button-group-container" class="button-group-container hidden">
           <!-- Menu Button -->
           <div class="toggle-button">
-            <img class="toggle-button logo" src="src/UI/button-transform.png" />
+            <img
+              class="toggle-button logo"
+              src="./src/UI/button-transform.png"
+            />
             <img
               id="toggle-img-all"
               class="toggle-button switch"
-              src="src/UI/button-switch-off.png"
-              onclick="toggleAllButtonHandler(this);"
+              src="./src/UI/button-switch-off.png"
             />
           </div>
           <div class="toggle-button">
-            <img class="toggle-button logo" src="src/UI/button-headgear.png" />
+            <img
+              class="toggle-button logo"
+              src="./src/UI/button-headgear.png"
+            />
             <img
               id="toggle-img-head"
               class="toggle-button switch"
-              src="src/UI/button-switch-off.png"
-              onclick="toggleButtonHandler(this, 'head')"
+              src="./src/UI/button-switch-off.png"
             />
           </div>
           <div class="toggle-button">
-            <img class="toggle-button logo" src="src/UI/button-clothes.png" />
+            <img class="toggle-button logo" src="./src/UI/button-clothes.png" />
             <img
               id="toggle-img-body"
               class="toggle-button switch"
-              src="src/UI/button-switch-off.png"
-              onclick="toggleButtonHandler(this, 'body')"
+              src="./src/UI/button-switch-off.png"
             />
           </div>
           <div class="toggle-button">
-            <img class="toggle-button logo" src="src/UI/button-aura.png" />
+            <img class="toggle-button logo" src="./src/UI/button-aura.png" />
             <img
+              id="toggle-img-aura"
               class="toggle-button switch"
-              src="src/UI/button-switch-off.png"
-              onclick="playAura(this, 'aura')"
+              src="./src/UI/button-switch-off.png"
             />
           </div>
           <div class="toggle-button">
@@ -100,15 +265,14 @@
               min="0"
               max="100"
               value="50"
-              oninput="moveBackground(this.value)"
             />
           </div>
 
           <div class="middle-bottom-div">
             <img
-              onclick="downloadImage()"
+              id="button-download"
               class="toggle-button logo"
-              src="src/UI/button-download.png"
+              src="./src/UI/button-download.png"
             />
           </div>
           <!-- Menu Button -->
@@ -120,6 +284,449 @@
       </div>
       <!-- Floating window close -->
     </div>
+
+    <script type="module" crossorigin="">
+      const downloadButton = document.getElementById("button-download");
+      const menuToggle = document.getElementById("menu-toggle");
+      const allToggle = document.getElementById("toggle-img-all");
+      const headToggle = document.getElementById("toggle-img-head");
+      const bodyToggle = document.getElementById("toggle-img-body");
+      const auraToggle = document.getElementById("toggle-img-aura");
+      const slider = document.getElementById("slider");
+
+      const bodyBase = document.getElementById("base-body");
+      const body = document.getElementById("body");
+      const head = document.getElementById("head");
+      const aura = document.getElementById("aura-video");
+      const container = document.getElementById("container");
+      const loading = document.getElementById("loading-video");
+      const background = document.getElementById("background");
+
+      // Track current active states
+      let isAllActive = false; // Can be 'suit' or 'casual'
+      let isHeadActive = false; // Can be 'suit' or 'casual'
+      let isBodyActive = false; // Can be 'armor' or 'clothes'
+      let isAuraActive = false; // Flag to check if preloading is complete
+      let isButtonGroupVisible = false;
+      let isTransitioning = false; // Prevent overlapping transitions
+      let preloadComplete = false; // Flag to check if preloading is complete
+
+      // Mapping of attributes to their image sources
+      const imagePaths = {
+        bodyBase: "./src/body.png",
+        background: "./src/background.jpg",
+        menuBox: "./src/UI/menu-box.png",
+        bodyClothes: "./src/body-clothes.png",
+        headClothes: "./src/head-clothes.png",
+        bodyArmor: "./src/body-armor.png",
+        headArmor: "./src/head-armor.png",
+      };
+
+      // Mapping of transition videos
+      const videoPaths = {
+        body: "./src/transition_body.webm",
+        head: "./src/transition_head.webm",
+        aura: "./src/aura.webm",
+      };
+
+      // Function to preload images
+      function preloadImages() {
+        return new Promise((resolve) => {
+          let loadedImages = 0;
+          const totalImages = Object.values(imagePaths).flat().length;
+
+          for (const key in imagePaths) {
+            const img = new Image();
+            img.src = imagePaths[key];
+            img.onload = () => {
+              loadedImages++;
+              if (loadedImages === totalImages) resolve();
+            };
+            img.onerror = () => {
+              loadedImages++;
+              if (loadedImages === totalImages) resolve();
+            };
+          }
+        });
+      }
+      // Function to preload videos
+      function preloadVideos() {
+        return new Promise((resolve) => {
+          let loadedVideos = 0;
+          const totalVideos = Object.keys(videoPaths).length;
+
+          for (const key in videoPaths) {
+            const video = document.createElement("video");
+            video.src = videoPaths[key];
+            video.onloadeddata = () => {
+              loadedVideos++;
+              if (loadedVideos === totalVideos) resolve();
+            };
+            video.onerror = () => {
+              loadedVideos++;
+              if (loadedVideos === totalVideos) resolve();
+            };
+          }
+        });
+      }
+
+      // Preload images and videos on page load
+      window.onload = function () {
+        console.log("start preload " + new Date().toLocaleTimeString());
+
+        container.style.display = "none"; // Hide container initially
+        container.style.opacity = 0;
+
+        loading.src = "./src/aura.webm";
+        loading.style.opacity = 1;
+
+        Promise.all([preloadImages(), preloadVideos()]).then(() => {
+          setTimeout(() => {
+            // dummy loading time
+            preloadComplete = true;
+            console.log("finish preload " + new Date().toLocaleTimeString());
+
+            container.style.display = "block"; // Show container once preloading is complete
+            container.style.opacity = 1; // Show container once preloading is complete
+
+            bodyBase.src = imagePaths.bodyBase;
+            background.src = imagePaths.background;
+
+            loading.style.opacity = 0;
+            setTimeout(() => {
+              setImage("head", false);
+              setImage("body", false);
+              moveBackground(125);
+              loading.remove();
+            }, 250);
+          }, 1000);
+        });
+      };
+
+      function toggleAllButtonHandler(element) {
+        // atribute head / body
+
+        const currentSrc = element.src;
+        element.classList.remove("on"); // Remove 'on' class
+        element.classList.add("off"); // Remove 'off' class
+        var activated = currentSrc.includes("button-switch-off.png");
+        isAllActive = activated;
+
+        setActiveToggle(element, activated);
+
+        toggleButtonHandler(headToggle, "head", isAllActive);
+        toggleButtonHandler(bodyToggle, "body", isAllActive);
+      }
+
+      // Function to toggle the image between ON and OFF states with smooth transition
+      function toggleButtonHandler(element, attribute, forceCondition = null) {
+        // atribute head / body
+        const currentSrc = element.src;
+        var activated = currentSrc.includes("button-switch-off.png");
+
+        if (forceCondition !== null) {
+          if (attribute === "head") if (isHeadActive === forceCondition) return;
+          if (attribute === "body") if (isBodyActive === forceCondition) return;
+
+          activated = forceCondition;
+        }
+
+        if (attribute === "head") isHeadActive = activated;
+        if (attribute === "body") isBodyActive = activated;
+
+        setActiveToggle(element, activated); // Wait for the transition to finish before changing the image
+
+        if (forceCondition === null) {
+          // null means handle if toggle trigger from individual toggle
+          if (isHeadActive && isBodyActive && !isAllActive) {
+            setActiveToggle(allToggle, true);
+          } else if ((!isHeadActive || !isBodyActive) && isAllActive) {
+            setActiveToggle(allToggle, false);
+          }
+        }
+
+        // Play the transition animation with reverse flag
+        playTransition(attribute, activated, true, () => {
+          console.log("no call back");
+          // Clear the transitioning flag
+          isTransitioning = false;
+        });
+      }
+
+      function setActiveToggle(element, activated) {
+        element.classList.remove("on"); // Remove 'on' class
+        element.classList.add("off"); // Remove 'off' class
+
+        // Use a small timeout to allow the transition to take effect before changing the image source
+        setTimeout(() => {
+          if (activated) {
+            element.src = "./src/UI/button-switch-on.png"; // Change to 'ON' state
+            element.classList.remove("off");
+            element.classList.add("on");
+          } else {
+            element.src = "./src/UI/button-switch-off.png"; // Change to 'OFF' state
+            element.classList.remove("on"); // Remove 'on' class
+            element.classList.remove("off"); // Remove 'off' class
+          }
+        }, 100);
+      }
+
+      function playAura(element, attribute) {
+        const currentSrc = element.src;
+        var activated = currentSrc.includes("button-switch-off.png");
+        setActiveToggle(element, activated);
+
+        isAuraActive = activated;
+        if (activated) {
+          aura.src = "./src/" + attribute + ".webm";
+          aura.style.display = "block"; // Show the video element
+          aura.onloadedmetadata = function () {
+            aura.play();
+            aura.onended = function () {};
+          };
+        } else {
+          aura.style.display = "none"; // Show the video element
+        }
+        hideButtonGroup();
+      }
+
+      // Function to play a transition video and execute a callback afterward
+      function playTransition(attribute, activated, hasTransition, callback) {
+        hideButtonGroup();
+
+        if (!hasTransition) {
+          setImage(attribute, value);
+          callback();
+          return;
+        }
+
+        const videoElement = document.getElementById(
+          "transition-" + attribute + "-video"
+        );
+        const videoSrc = "./src/transition_" + attribute + ".webm";
+
+        if (videoElement.src !== videoSrc) videoElement.src = videoSrc;
+        videoElement.style.display = "block"; // Show the video element
+
+        videoElement.onloadedmetadata = function () {
+          if (!activated) {
+            videoElement.pause();
+            videoElement.currentTime = videoElement.duration; // Start at the end
+
+            let frame = 0;
+            const stepBackward = () => {
+              if (videoElement.currentTime > 0) {
+                videoElement.currentTime = Math.max(
+                  videoElement.currentTime - 0.075,
+                  0
+                ); // Move back one frame (approximately 33ms for 30fps)
+                videoElement.requestVideoFrameCallback(() => {
+                  stepBackward(); // Call next frame
+                  if (frame === 1) setImage(attribute, activated);
+                  frame++;
+                });
+              } else {
+                videoElement.pause();
+                setTimeout(() => {
+                  videoElement.style.display = "none";
+                }, 50); // Hide the video element
+                callback(); // Execute callback after reverse playback
+              }
+            };
+
+            stepBackward(); // Start the reverse playback loop
+          } else {
+            videoElement.play();
+
+            // When the video ends, hide it and execute the callback
+            videoElement.onended = function () {
+              setImage(attribute, activated);
+              videoElement.pause();
+              setTimeout(() => {
+                videoElement.style.display = "none";
+              }, 50);
+
+              callback();
+            };
+
+            // Handle video playback errors
+            videoElement.onerror = function () {
+              console.error(`Error playing transition video: ${videoSrc}`);
+              videoElement.style.display = "none";
+              callback(); // Proceed even if the video fails
+            };
+          }
+        };
+
+        // Handle cases where the video fails to load metadata
+        videoElement.onerror = function () {
+          console.error(`Failed to load video metadata: ${videoSrc}`);
+          videoElement.style.display = "none";
+          callback(); // Proceed even if the video fails
+        };
+      }
+      function setImage(attribute, activated) {
+        const element = document.getElementById(attribute);
+
+        if (activated) {
+          element.src = "./src/" + attribute + "-armor.png";
+          element.style.display = "block"; // Show image
+        } else {
+          element.src = "./src/" + attribute + "-clothes.png";
+          element.style.display = "block"; // Show image
+        }
+      }
+
+      function showButtonGroup() {
+        const buttonGroupContainer = document.getElementById(
+          "button-group-container"
+        );
+        const buttonGroupContainerBackground = document.getElementById(
+          "button-group-container-background"
+        );
+        const collapseButton = document.getElementById("collapse-button");
+
+        buttonGroupContainer.classList.remove("hidden");
+        buttonGroupContainerBackground.classList.remove("hidden");
+        collapseButton.classList.add("hidden");
+
+        // Add event listener for clicks outside the button group
+        document.addEventListener("click", hideButtonGroupOnClickOutside);
+      }
+
+      function hideButtonGroup() {
+        const buttonGroupContainer = document.getElementById(
+          "button-group-container"
+        );
+        const buttonGroupContainerBackground = document.getElementById(
+          "button-group-container-background"
+        );
+        const collapseButton = document.getElementById("collapse-button");
+
+        buttonGroupContainer.classList.add("hidden");
+        buttonGroupContainerBackground.classList.add("hidden");
+        collapseButton.classList.remove("hidden");
+
+        // Remove the event listener
+        document.removeEventListener("click", hideButtonGroupOnClickOutside);
+      }
+
+      function hideButtonGroupOnClickOutside(event) {
+        const buttonGroupContainer = document.getElementById(
+          "button-group-container"
+        );
+        const collapseButton = document.getElementById("collapse-button");
+
+        // Check if the click is outside the button group container
+        if (
+          !buttonGroupContainer.contains(event.target) &&
+          !collapseButton.contains(event.target)
+        ) {
+          hideButtonGroup();
+        }
+      }
+
+      function moveBackground(value) {
+        // Get dimensions
+        const bgWidth = background.offsetWidth;
+        const viewportWidth = window.innerWidth;
+
+        // Calculate the maximum allowed movement
+        const maxMovement = (bgWidth - viewportWidth) / 2;
+
+        // Map slider value to range [-maxMovement, maxMovement]
+        const mappedValue =
+          (value / slider.max) * 2 * maxMovement - maxMovement;
+
+        // Clamp the movement value to prevent exceeding boundaries
+        const clampedValue =
+          Math.max(-maxMovement, Math.min(mappedValue, maxMovement)) -
+          maxMovement;
+
+        // Apply translation
+        background.style.transform = `translateX(${clampedValue}px)`;
+      }
+
+      // // Function to download the current state of the container as an image
+      // function downloadImage() {
+      //   hideButtonGroup();
+      //   const container = document.getElementById("container");
+      //   const buttonContainer = document.getElementById("button-container");
+
+      //   // Temporarily hide the button group and transition video to exclude them from the screenshot
+      //   buttonContainer.style.opacity = 0;
+
+      //   // Use html2canvas to capture the container
+      //   html2canvas(container, {
+      //     allowTaint: true,
+      //     useCORS: true,
+      //   }).then(function (canvas) {
+      //     const ctx = canvas.getContext("2d");
+
+      //     const aura = document.getElementById("aura-video");
+      //     ctx.drawImage(aura, 0, 0, canvas.width, canvas.height);
+
+      //     const link = document.createElement("a");
+      //     link.href = canvas.toDataURL("image/png");
+      //     link.download = "Neon-Vanguard.png";
+      //     link.click();
+
+      //     // Restore the visibility of the button group and transition video
+      //     buttonContainer.style.opacity = 1;
+      //   });
+      // }
+      menuToggle.addEventListener("click", function () {
+        showButtonGroup();
+      });
+
+      allToggle.addEventListener("click", function () {
+        toggleAllButtonHandler(this);
+      });
+      headToggle.addEventListener("click", function () {
+        toggleButtonHandler(this, "head");
+      });
+      bodyToggle.addEventListener("click", function () {
+        toggleButtonHandler(this, "body");
+      });
+      auraToggle.addEventListener("click", function () {
+        playAura(this);
+      });
+      slider.addEventListener("oninput", function () {
+        moveBackground(this.value);
+      });
+
+      downloadButton.addEventListener("click", () => {
+        let canvasWidth = 4500,
+          canvasHeight = 4500,
+          canvas = document.createElement("canvas");
+        canvas.height = canvasWidth;
+        canvas.width = canvasHeight;
+        let context = canvas.getContext("2d");
+
+        let backgroundColor = colorInput.value;
+
+        context.fillStyle = backgroundColor;
+        context.fillRect(0, 0, canvasWidth, canvasHeight);
+
+        let image2 = document.getElementById("background");
+        context.drawImage(image2, 0, 0, canvasWidth, canvasHeight);
+        let image3 = document.getElementById("body-base");
+        context.drawImage(image3, 0, 0, canvasWidth, canvasHeight);
+        let image4 = document.getElementById("body");
+        context.drawImage(image4, 0, 0, canvasWidth, canvasHeight);
+        let image5 = document.getElementById("head");
+        context.drawImage(image5, 0, 0, canvasWidth, canvasHeight);
+        let image6 = document.getElementById("aura");
+        context.drawImage(image5, 0, 0, canvasWidth, canvasHeight);
+
+        let link = document.createElement("a");
+        link.href = canvas.toDataURL("image/png");
+        link.download = "Neon-Vanguard.png";
+        document.body.appendChild(link);
+        link.click();
+        document.body.removeChild(link);
+      });
+    </script>
     <!-- Include html2canvas Library -->
     <script src="js/html2canvas.min.js"></script>
     <!-- Include Custom Script -->
