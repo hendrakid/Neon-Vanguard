@@ -21,7 +21,7 @@
   </head>
   <body>
     <div class="container" id="interactive-container">
-      <img id="background" src="src/BG.jpg" class="background" />
+      <img id="background" src="src/background.jpg" class="background" />
       <div class="image-container">
         <img id="base-body" src="src/body.png" alt="Base Body" class="image" />
         <img id="body" alt="Body" class="image overlay" />
@@ -29,13 +29,14 @@
         <!-- Transition Video Element -->
         <video id="transition-body-video" class="image overlay"></video>
         <video id="transition-head-video" class="image overlay"></video>
+        <video id="aura-video" class="image overlay" loop></video>
       </div>
 
       <!-- Floating window -->
       <div class="floating-buttons" id="button-container">
         <div class="collapse-button" id="collapse-button">
           <img
-            src="src/menu-button.png"
+            src="src/UI/menu-button.png"
             alt="Collapse"
             onclick="showButtonGroup()"
           />
@@ -43,38 +44,38 @@
         <div id="button-group-container" class="button-group-container hidden">
           <!-- Menu Button -->
           <div class="toggle-button">
-            <img class="toggle-button logo" src="src/button-transform.png" />
+            <img class="toggle-button logo" src="src/UI/button-transform.png" />
             <img
               id="toggle-img-all"
               class="toggle-button switch"
-              src="src/button-switch-off.png"
+              src="src/UI/button-switch-off.png"
               onclick="toggleAllButtonHandler(this);"
             />
           </div>
           <div class="toggle-button">
-            <img class="toggle-button logo" src="src/button-headgear.png" />
+            <img class="toggle-button logo" src="src/UI/button-headgear.png" />
             <img
               id="toggle-img-head"
               class="toggle-button switch"
-              src="src/button-switch-off.png"
+              src="src/UI/button-switch-off.png"
               onclick="toggleButtonHandler(this, 'head')"
             />
           </div>
           <div class="toggle-button">
-            <img class="toggle-button logo" src="src/button-clothes.png" />
+            <img class="toggle-button logo" src="src/UI/button-clothes.png" />
             <img
               id="toggle-img-body"
               class="toggle-button switch"
-              src="src/button-switch-off.png"
+              src="src/UI/button-switch-off.png"
               onclick="toggleButtonHandler(this, 'body')"
             />
           </div>
           <div class="toggle-button">
-            <img class="toggle-button logo" src="src/button-aura.png" />
+            <img class="toggle-button logo" src="src/UI/button-aura.png" />
             <img
               class="toggle-button switch"
-              src="src/button-switch-off.png"
-              onclick="toggleButtonHandler(this, 'aura')"
+              src="src/UI/button-switch-off.png"
+              onclick="playAura(this, 'aura')"
             />
           </div>
           <div class="toggle-button">
@@ -88,12 +89,12 @@
               oninput="moveBackground(this.value)"
             />
           </div>
-          
+
           <div class="middle-bottom-div">
             <img
               onclick="downloadImage()"
               class="toggle-button logo"
-              src="src/button-download.png"
+              src="src/UI/button-download.png"
             />
           </div>
           <!-- Menu Button -->
@@ -103,7 +104,6 @@
           class="menu-background hidden"
         ></div>
       </div>
-
       <!-- Floating window close -->
     </div>
 

@@ -2,6 +2,7 @@
 let isAllActive = false; // Can be 'suit' or 'casual'
 let isHeadActive = false; // Can be 'suit' or 'casual'
 let isBodyActive = false; // Can be 'armor' or 'clothes'
+let isAuraActive = false; // Flag to check if preloading is complete
 let isButtonGroupVisible = false;
 let isTransitioning = false; // Prevent overlapping transitions
 let preloadComplete = false; // Flag to check if preloading is complete
@@ -26,7 +27,7 @@ const imagePaths = {
 const videoPaths = {
   body: "src/transition_body.webm",
   head: "src/transition_head.webm",
-  // aura: "src/aura.webm",
+  aura: "src/aura.webm",
 };
 
 // Function to preload images
@@ -91,7 +92,7 @@ window.onload = function () {
   });
 };
 
-function toggleAllButtonHandler(element, attribute) {
+function toggleAllButtonHandler(element) {
   // atribute head / body
 
   const currentSrc = element.src;
@@ -99,18 +100,8 @@ function toggleAllButtonHandler(element, attribute) {
   element.classList.add("off"); // Remove 'off' class
   var activated = currentSrc.includes("button-switch-off.png");
   isAllActive = activated;
-  // Use a small timeout to allow the transition to take effect before changing the image source
-  setTimeout(() => {
-    if (activated) {
-      element.src = "src/button-switch-on.png"; // Change to 'ON' state
-      element.classList.remove("off");
-      element.classList.add("on");
-    } else {
-      element.src = "src/button-switch-off.png"; // Change to 'OFF' state
-      element.classList.remove("on"); // Remove 'on' class
-      element.classList.remove("off"); // Remove 'off' class
-    }
-  }, 100); // Wait for the transition to finish before changing the image
+
+  setActiveToggle(element, activated);
 
   const head = document.getElementById("toggle-img-head");
   const body = document.getElementById("toggle-img-body");
@@ -134,49 +125,18 @@ function toggleButtonHandler(element, attribute, forceCondition = null) {
   if (attribute === "head") isHeadActive = activated;
   if (attribute === "body") isBodyActive = activated;
 
-  element.classList.remove("on"); // Remove 'on' class
-  element.classList.add("off"); // Remove 'off' class
-
-  // Use a small timeout to allow the transition to take effect before changing the image source
-  setTimeout(() => {
-    if (activated) {
-      element.src = "src/button-switch-on.png"; // Change to 'ON' state
-      element.classList.remove("off");
-      element.classList.add("on");
-    } else {
-      element.src = "src/button-switch-off.png"; // Change to 'OFF' state
-      element.classList.remove("on"); // Remove 'on' class
-      element.classList.remove("off"); // Remove 'off' class
-    }
-  }, 100); // Wait for the transition to finish before changing the image
+  setActiveToggle(element, activated); // Wait for the transition to finish before changing the image
 
   if (forceCondition === null) {
     // null means handle if toggle trigger from individual toggle
     if (isHeadActive && isBodyActive && !isAllActive) {
       const toggleAllElement = document.getElementById("toggle-img-all");
-      toggleAllElement.classList.remove("on"); // Remove 'on' class
-      toggleAllElement.classList.add("off"); // Remove 'off' class
-      isAllActive = true;
-      setTimeout(() => {
-        toggleAllElement.src = "src/button-switch-on.png"; // Change to 'ON' state
-        toggleAllElement.classList.remove("off");
-        toggleAllElement.classList.add("on");
-      }, 100); // Wait for the transition to finish before changing the image
+      setActiveToggle(toggleAllElement, true);
     } else if ((!isHeadActive || !isBodyActive) && isAllActive) {
       const toggleAllElement = document.getElementById("toggle-img-all");
-      toggleAllElement.classList.remove("on"); // Remove 'on' class
-      toggleAllElement.classList.add("off"); // Remove 'off' class
-      isAllActive = false;
-      setTimeout(() => {
-        toggleAllElement.src = "src/button-switch-off.png"; // Change to 'OFF' state
-        toggleAllElement.classList.remove("on"); // Remove 'on' class
-        toggleAllElement.classList.remove("off"); // Remove 'off' class
-      }, 100); // Wait for the transition to finish before changing the image
+      setActiveToggle(toggleAllElement, false);
     }
   }
-
-  // jika activated sudah pasti akan playTransition normal
-  // jika false sudah pasti akan reverse transition, setimage onstart
 
   // Play the transition animation with reverse flag
   playTransition(attribute, activated, true, () => {
@@ -184,6 +144,44 @@ function toggleButtonHandler(element, attribute, forceCondition = null) {
     // Clear the transitioning flag
     isTransitioning = false;
   });
+}
+
+function setActiveToggle(element, activated) {
+  element.classList.remove("on"); // Remove 'on' class
+  element.classList.add("off"); // Remove 'off' class
+
+  // Use a small timeout to allow the transition to take effect before changing the image source
+  setTimeout(() => {
+    if (activated) {
+      element.src = "src/UI/button-switch-on.png"; // Change to 'ON' state
+      element.classList.remove("off");
+      element.classList.add("on");
+    } else {
+      element.src = "src/UI/button-switch-off.png"; // Change to 'OFF' state
+      element.classList.remove("on"); // Remove 'on' class
+      element.classList.remove("off"); // Remove 'off' class
+    }
+  }, 100);
+}
+
+function playAura(element, attribute) {
+  const currentSrc = element.src;
+  var activated = currentSrc.includes("button-switch-off.png");
+  setActiveToggle(element, activated);
+
+  isAuraActive = activated;
+  const videoElement = document.getElementById(attribute + "-video");
+  if (activated) {
+    videoElement.src = "src/" + attribute + ".webm";
+    videoElement.style.display = "block"; // Show the video element
+    videoElement.onloadedmetadata = function () {
+      videoElement.play();
+      videoElement.onended = function () {};
+    };
+  } else {
+    videoElement.style.display = "none"; // Show the video element
+  }
+  hideButtonGroup();
 }
 
 // Function to play a transition video and execute a callback afterward
@@ -342,36 +340,7 @@ function moveBackground(value) {
 
   // Apply translation
   background.style.transform = `translateX(${clampedValue}px)`;
-  console.log(
-    "bgWidth:",
-    bgWidth,
-    "viewportWidth:",
-    viewportWidth,
-    "maxMovement:",
-    maxMovement,
-    "clampedValue:",
-    clampedValue
-  );
 }
-
-// Event listener for mouse movement to scroll the background
-document
-  .getElementById("background")
-  .addEventListener("mousemove", function (e) {
-    const container = this;
-    const rect = container.getBoundingClientRect();
-    const x = e.clientX - rect.left; // Mouse X position within container
-    const y = e.clientY - rect.top; // Mouse Y position within container
-    const width = rect.width;
-    const height = rect.height;
-
-    // Calculate the background position percentage
-    const bgX = (x / width) * 100;
-    const bgY = (y / height) * 100;
-
-    // Update background position
-    container.style.backgroundPosition = `${bgX}% ${bgY}%`;
-  });
 
 // Function to download the current state of the container as an image
 function downloadImage() {

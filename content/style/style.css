@@ -68,7 +68,7 @@ body {
   max-height: 2000px;
   min-width: 100px;
   min-height: 100px;
-  background-image: url('../src/menu-box.png');
+  background-image: url('../src/UI/menu-box.png');
   background-size: cover;
   background-position: center;
   background-repeat: no-repeat;
