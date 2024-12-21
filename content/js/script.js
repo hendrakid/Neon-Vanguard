@@ -76,16 +76,17 @@ function preloadVideos() {
 
 // Preload images and videos on page load
 window.onload = function () {
-  const loading = document.getElementById("loading");
-  loading.src = "src/loading.webp";
-  loading.style.opacity = 1;
-
   const container = document.getElementById("interactive-container");
   container.style.display = "none"; // Hide container initially
   container.style.opacity = 0;
 
+  const loading = document.getElementById("loading");
+  loading.src = "src/loading.webp";
+  loading.style.opacity = 1;
+
   Promise.all([preloadImages(), preloadVideos()]).then(() => {
-    setTimeout(() => { // dummy loading time
+    setTimeout(() => {
+      // dummy loading time
       preloadComplete = true;
       console.log("finish preload " + new Date().toLocaleTimeString());
 
@@ -98,7 +99,7 @@ window.onload = function () {
         setImage("body", false);
         moveBackground(125);
 
-        loading.style.display = "none";
+        loading.remove();
       }, 250);
     }, 1000);
   });
