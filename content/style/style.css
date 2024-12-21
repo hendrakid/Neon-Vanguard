@@ -13,7 +13,7 @@ body {
   position: fixed;
   top: 0;
   left: 0;
-  width: 200%; /* Allows for visible movement */
+  width: auto;
   height: 100%;
   object-fit: cover;
   object-position: center;
@@ -22,7 +22,7 @@ body {
 
 
 .container {
-  width: 100%;
+  width: auto;
   height: 100%; /* Maintain height relative to screen height */
   overflow: hidden;
   opacity: 0;
@@ -32,12 +32,12 @@ body {
 
 .image-container {
   position: relative;
-  width: 100%;
+  width: auto;
   height: 100%;
 }
 
 .image {
-  width: 100%;
+  width: auto;
   height: 100%;
   object-fit: contain; /* Preserve aspect ratio */
 }
