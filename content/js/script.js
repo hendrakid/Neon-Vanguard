@@ -369,7 +369,7 @@ function downloadImage() {
   }).then(function (canvas) {
     const ctx = canvas.getContext("2d");
     const aura = document.getElementById("aura-video");
-    ctx.drawImage(aura, 0, 0, canvas.width, canvas.height);
+    ctx.drawImage(aura, 0, 0, aura.width, aura.height);
 
     const link = document.createElement("a");
     link.href = canvas.toDataURL("image/png");
