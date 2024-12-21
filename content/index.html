@@ -471,14 +471,14 @@
         }, 100);
       }
 
-      function playAura(element, attribute) {
+      function playAura(element) {
         const currentSrc = element.src;
         var activated = currentSrc.includes("button-switch-off.png");
         setActiveToggle(element, activated);
 
         isAuraActive = activated;
         if (activated) {
-          aura.src = "./src/" + attribute + ".webm";
+          aura.src = videoPaths.aura;
           aura.style.display = "block"; // Show the video element
           aura.onloadedmetadata = function () {
             aura.play();
@@ -688,11 +688,11 @@
       bodyToggle.addEventListener("click", function () {
         toggleButtonHandler(this, "body");
       });
-      auraToggle.addEventListener("click", function () {
-        playAura(this);
+      auraToggle.addEventListener("click", function (e) {
+        playAura(e);
       });
-      slider.addEventListener("oninput", function () {
-        moveBackground(this.value);
+      slider.addEventListener("input", (e) => {
+        moveBackground(e.target.value);
       });
 
       downloadButton.addEventListener("click", () => {
