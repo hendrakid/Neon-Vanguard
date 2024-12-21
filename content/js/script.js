@@ -19,7 +19,7 @@ const imagePaths = {
   },
   other: {
     body: "src/body.png",
-    background: "src/BG.jpg",
+    background: "src/background.jpg",
   },
 };
 
@@ -76,19 +76,31 @@ function preloadVideos() {
 
 // Preload images and videos on page load
 window.onload = function () {
+  const loading = document.getElementById("loading");
+  loading.src = "src/loading.webp";
+  loading.style.opacity = 1;
+
   const container = document.getElementById("interactive-container");
-  // container.style.display = "none"; // Hide container initially
+  container.style.display = "none"; // Hide container initially
   container.style.opacity = 0;
 
   Promise.all([preloadImages(), preloadVideos()]).then(() => {
-    preloadComplete = true;
-    // container.style.display = "block"; // Show container once preloading is complete
-    container.style.opacity = 1; // Show container once preloading is complete
+    setTimeout(() => { // dummy loading time
+      preloadComplete = true;
+      console.log("finish preload " + new Date().toLocaleTimeString());
 
-    console.log("finish preload " + new Date().toLocaleTimeString());
-    setImage("head", false);
-    setImage("body", false);
-    moveBackground(125);
+      loading.style.opacity = 0;
+      setTimeout(() => {
+        container.style.display = "block"; // Show container once preloading is complete
+        container.style.opacity = 1; // Show container once preloading is complete
+
+        setImage("head", false);
+        setImage("body", false);
+        moveBackground(125);
+
+        loading.style.display = "none";
+      }, 250);
+    }, 1000);
   });
 };
 
@@ -351,7 +363,6 @@ function downloadImage() {
   const transitionHeadVideo = document.getElementById("transition-head-video");
 
   // Temporarily hide the button group and transition video to exclude them from the screenshot
-  buttonContainer.style.opacity = 0;
   transitionBodyVideo.style.display = "none";
   transitionHeadVideo.style.display = "none";
 
@@ -366,6 +377,5 @@ function downloadImage() {
     link.click();
 
     // Restore the visibility of the button group and transition video
-    buttonContainer.style.opacity = 1;
   });
 }
