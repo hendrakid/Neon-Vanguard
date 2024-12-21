@@ -362,14 +362,14 @@ function downloadImage() {
   // Temporarily hide the button group and transition video to exclude them from the screenshot
   buttonContainer.style.opacity = 0;
 
-  const aura = document.getElementById("aura-video");
-  aura.style.zIndex = 999;
 
   html2canvas(container, {
     allowTaint: true,
     useCORS: true,
   }).then(function (canvas) {
     const ctx = canvas.getContext("2d");
+    const aura = document.getElementById("aura-video");
+    aura.style.zIndex = 999;
     ctx.drawImage(aura, 0, 0, aura.width, aura.height);
 
     const link = document.createElement("a");
