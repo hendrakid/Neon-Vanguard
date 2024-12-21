@@ -355,28 +355,12 @@ function moveBackground(value) {
 
 // Function to download the current state of the container as an image
 function downloadImage() {
-  // const canvas = document.getElementById("canvas");
-  // const ctx = canvas.getContext("2d");
-
-  // Load images
-  const image1 = document.getElementById("base-body");
-  const image2 = document.getElementById("body");
-  const image3 = document.getElementById("head");
-  const image4 = document.getElementById("aura-video");
-
-  // Draw images on the canvas
-  // ctx.drawImage(image1, 0, 0, canvas.width, canvas.height);
-  // ctx.drawImage(image2, 0, 0, canvas.width, canvas.height);
-  // ctx.drawImage(image3, 0, 0, canvas.width, canvas.height);
-  // ctx.drawImage(image4, 0, 0, canvas.width, canvas.height);
-  // canvas.style.opacity = 1;
-
   hideButtonGroup();
   const container = document.getElementById("container");
   const buttonContainer = document.getElementById("button-container");
 
   const aura = document.getElementById("aura-video");
-  aura.style.zIndex = 999;
+  // aura.style.zIndex = 999;
   // Temporarily hide the button group and transition video to exclude them from the screenshot
   buttonContainer.style.opacity = 0;
 
@@ -385,9 +369,8 @@ function downloadImage() {
     allowTaint: true,
     useCORS: true,
   }).then(function (canvas) {
-
     const ctx = canvas.getContext("2d");
-    ctx.drawImage(image4, 0, 0, canvas.width, canvas.height);
+    ctx.drawImage(aura, 0, 0, aura.width, aura.height);
 
     const link = document.createElement("a");
     link.href = canvas.toDataURL("image/png");
@@ -396,7 +379,6 @@ function downloadImage() {
 
     // Restore the visibility of the button group and transition video
     buttonContainer.style.opacity = 1;
-    const aura = document.getElementById("aura-video");
-    aura.style.zIndex = 14;
+    // aura.style.zIndex = 14;
   });
 }
