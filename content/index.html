@@ -377,7 +377,7 @@
         container.style.display = "none"; // Hide container initially
         container.style.opacity = 0;
 
-        loading.src = "./src/aura.webm";
+        loading.src = "./src/loading.webm";
         loading.style.opacity = 1;
 
         Promise.all([preloadImages(), preloadVideos()]).then(() => {
@@ -696,37 +696,7 @@
       });
 
       downloadButton.addEventListener("click", () => {
-        let canvasWidth = 4500,
-          canvasHeight = 4500,
-          canvas = document.createElement("canvas");
-        canvas.height = canvasWidth;
-        canvas.width = canvasHeight;
-        let context = canvas.getContext("2d");
-
-        // context.fillRect(0, 0, canvasWidth, canvasHeight);
-
-        let container = document.getElementById("container");
-        context.drawImage(container, 0, 0, canvasWidth, canvasHeight);
-        let aura = document.getElementById("aura-video");
-        context.drawImage(aura, 0, 0, canvasWidth, canvasHeight);
-
-        // let image2 = document.getElementById("background");
-        // context.drawImage(image2, 0, 0, canvasWidth, canvasHeight);
-        // let image3 = document.getElementById("base-body");
-        // context.drawImage(image3, 0, 0, canvasWidth, canvasHeight);
-        // let image4 = document.getElementById("body");
-        // context.drawImage(image4, 0, 0, canvasWidth, canvasHeight);
-        // let image5 = document.getElementById("head");
-        // context.drawImage(image5, 0, 0, canvasWidth, canvasHeight);
-        // let image6 = document.getElementById("aura-video");
-        // context.drawImage(image5, 0, 0, canvasWidth, canvasHeight);
-
-        let link = document.createElement("a");
-        link.href = canvas.toDataURL("image/png");
-        link.download = "Neon-Vanguard.png";
-        document.body.appendChild(link);
-        link.click();
-        document.body.removeChild(link);
+        downloadImage();
       });
     </script>
   </body>
