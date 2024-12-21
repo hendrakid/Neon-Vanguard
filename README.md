@@ -1,29 +1,24 @@
 # Neon-Vanguard
 
+An Interactive Token Template
+
 ## Usage
+
 `Use content folder for minting into store`
 
 ## Traits
-```
-casual mode :
-- BG
-- karakter+rambut
-- clothes
-- mouthpiece
-- eyewear
-- headwear
-- crownpiece
 
-battle mode :
-- BG
-- karakter+rambut
-- armor
-- helmet-mask
-- helmet-visor
-- helmet-main
-- helmet-crown
+```
+Interactive :
+- Transform
+- Head
+- Body
 ```
 
+## Component
+
+`html2canvas`
 
 ## 🔗 Demo
+
 [Here!](https://hendrakid.github.io/Neon-Vanguard/)
