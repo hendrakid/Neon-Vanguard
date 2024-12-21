@@ -91,14 +91,13 @@ window.onload = function () {
       bodyBase.src = imagePaths.bodyBase;
       const background = document.getElementById("background");
       background.src = imagePaths.background;
-      
+
       setImage("head", false);
       setImage("body", false);
       moveBackground(125);
-      
+
       loading.style.opacity = 0;
       setTimeout(() => {
-
         loading.remove();
       }, 250);
     }, 1000);
@@ -357,6 +356,22 @@ function moveBackground(value) {
 
 // Function to download the current state of the container as an image
 function downloadImage() {
+  // const canvas = document.getElementById("canvas");
+  // const ctx = canvas.getContext("2d");
+
+  // Load images
+  const image1 = document.getElementById("base-body");
+  const image2 = document.getElementById("body");
+  const image3 = document.getElementById("head");
+  const image4 = document.getElementById("aura-video");
+
+  // Draw images on the canvas
+  // ctx.drawImage(image1, 0, 0, canvas.width, canvas.height);
+  // ctx.drawImage(image2, 0, 0, canvas.width, canvas.height);
+  // ctx.drawImage(image3, 0, 0, canvas.width, canvas.height);
+  // ctx.drawImage(image4, 0, 0, canvas.width, canvas.height);
+  // canvas.style.opacity = 1;
+
   hideButtonGroup();
   const container = document.getElementById("container");
   const buttonContainer = document.getElementById("button-container");
@@ -371,6 +386,10 @@ function downloadImage() {
     allowTaint: true,
     useCORS: true,
   }).then(function (canvas) {
+
+    const ctx = canvas.getContext("2d");
+    ctx.drawImage(image4, 0, 0, canvas.width, canvas.height);
+
     const link = document.createElement("a");
     link.href = canvas.toDataURL("image/png");
     link.download = "Neon-Vanguard.png";
