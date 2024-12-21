@@ -91,6 +91,8 @@ window.onload = function () {
 
         const bodyBase = document.getElementById("base-body");
         bodyBase.src = imagePaths.bodyBase;
+        const background = document.getElementById("background");
+        background.src = imagePaths.background;
         setImage("head", false);
         setImage("body", false);
         moveBackground(125);
