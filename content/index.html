@@ -705,16 +705,21 @@
 
         // context.fillRect(0, 0, canvasWidth, canvasHeight);
 
-        let image2 = document.getElementById("background");
-        context.drawImage(image2, 0, 0, canvasWidth, canvasHeight);
-        let image3 = document.getElementById("base-body");
-        context.drawImage(image3, 0, 0, canvasWidth, canvasHeight);
-        let image4 = document.getElementById("body");
-        context.drawImage(image4, 0, 0, canvasWidth, canvasHeight);
-        let image5 = document.getElementById("head");
-        context.drawImage(image5, 0, 0, canvasWidth, canvasHeight);
-        let image6 = document.getElementById("aura-video");
-        context.drawImage(image5, 0, 0, canvasWidth, canvasHeight);
+        let container = document.getElementById("container");
+        context.drawImage(container, 0, 0, canvasWidth, canvasHeight);
+        let aura = document.getElementById("aura-video");
+        context.drawImage(aura, 0, 0, canvasWidth, canvasHeight);
+
+        // let image2 = document.getElementById("background");
+        // context.drawImage(image2, 0, 0, canvasWidth, canvasHeight);
+        // let image3 = document.getElementById("base-body");
+        // context.drawImage(image3, 0, 0, canvasWidth, canvasHeight);
+        // let image4 = document.getElementById("body");
+        // context.drawImage(image4, 0, 0, canvasWidth, canvasHeight);
+        // let image5 = document.getElementById("head");
+        // context.drawImage(image5, 0, 0, canvasWidth, canvasHeight);
+        // let image6 = document.getElementById("aura-video");
+        // context.drawImage(image5, 0, 0, canvasWidth, canvasHeight);
 
         let link = document.createElement("a");
         link.href = canvas.toDataURL("image/png");
