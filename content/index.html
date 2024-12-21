@@ -688,8 +688,8 @@
       bodyToggle.addEventListener("click", function () {
         toggleButtonHandler(this, "body");
       });
-      auraToggle.addEventListener("click", function (e) {
-        playAura(e);
+      auraToggle.addEventListener("click", function () {
+        playAura(this);
       });
       slider.addEventListener("input", (e) => {
         moveBackground(e.target.value);
