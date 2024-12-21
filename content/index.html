@@ -186,7 +186,7 @@
     </style>
   </head>
   <body>
-    <video id="loading-video" class="loading" crossorigin="anonymous"></video>
+    <video id="loading-video" src="./src/UI/loading.webm" class="loading" crossorigin="anonymous"></video>
     <div class="container" id="container">
       <img id="background" class="background" crossorigin="anonymous" />
       <div class="image-container">
@@ -377,7 +377,6 @@
         container.style.display = "none"; // Hide container initially
         container.style.opacity = 0;
 
-        loading.src = "./src/loading.webm";
         loading.style.opacity = 1;
 
         Promise.all([preloadImages(), preloadVideos()]).then(() => {
