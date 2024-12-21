@@ -27,13 +27,13 @@ body {
   overflow: hidden;
   opacity: 0;
   /* background-color: #f0f0f0; */
-  /*aspect-ratio: 1/1; /* Maintain 1:1 ratio  */
 }
 
 .image-container {
   position: relative;
   width: auto;
   height: 100%;
+  object-position: center;
 }
 
 .image {
@@ -45,7 +45,10 @@ body {
 .overlay {
   position: absolute;
   top: 0;
-  left: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  max-width: '100%';
+  right: auto;
   display: none; /* Hide by default */
 }
 
