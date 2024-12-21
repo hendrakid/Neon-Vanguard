@@ -92,12 +92,11 @@ window.onload = function () {
       const background = document.getElementById("background");
       background.src = imagePaths.background;
 
-      setImage("head", false);
-      setImage("body", false);
-      moveBackground(125);
-
       loading.style.opacity = 0;
       setTimeout(() => {
+        setImage("head", false);
+        setImage("body", false);
+        moveBackground(125);
         loading.remove();
       }, 250);
     }, 1000);
