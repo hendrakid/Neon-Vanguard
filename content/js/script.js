@@ -359,6 +359,8 @@ function downloadImage() {
   const container = document.getElementById("container");
   const buttonContainer = document.getElementById("button-container");
 
+  const image4 = document.getElementById("aura-video");
+
   const aura = document.getElementById("aura-video");
   aura.style.zIndex = 999;
   // Temporarily hide the button group and transition video to exclude them from the screenshot
@@ -370,7 +372,7 @@ function downloadImage() {
     useCORS: true,
   }).then(function (canvas) {
     const ctx = canvas.getContext("2d");
-    ctx.drawImage(aura, 0, 0, aura.width, aura.height);
+    ctx.drawImage(image4, 0, 0, image4.width, image4.height);
 
     const link = document.createElement("a");
     link.href = canvas.toDataURL("image/png");
