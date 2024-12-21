@@ -372,7 +372,7 @@ function downloadImage() {
     useCORS: true,
   }).then(function (canvas) {
     const ctx = canvas.getContext("2d");
-    ctx.drawImage(image4, 0, 0, image4.width, image4.height);
+    ctx.drawImage(image4, 0, 0, canvas.width, canvas.height);
 
     const link = document.createElement("a");
     link.href = canvas.toDataURL("image/png");
