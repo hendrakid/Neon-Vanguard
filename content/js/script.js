@@ -84,18 +84,20 @@ window.onload = function () {
       preloadComplete = true;
       console.log("finish preload " + new Date().toLocaleTimeString());
 
+      container.style.display = "block"; // Show container once preloading is complete
+      container.style.opacity = 1; // Show container once preloading is complete
+
+      const bodyBase = document.getElementById("base-body");
+      bodyBase.src = imagePaths.bodyBase;
+      const background = document.getElementById("background");
+      background.src = imagePaths.background;
+      
+      setImage("head", false);
+      setImage("body", false);
+      moveBackground(125);
+      
       loading.style.opacity = 0;
       setTimeout(() => {
-        container.style.display = "block"; // Show container once preloading is complete
-        container.style.opacity = 1; // Show container once preloading is complete
-
-        const bodyBase = document.getElementById("base-body");
-        bodyBase.src = imagePaths.bodyBase;
-        const background = document.getElementById("background");
-        background.src = imagePaths.background;
-        setImage("head", false);
-        setImage("body", false);
-        moveBackground(125);
 
         loading.remove();
       }, 250);
