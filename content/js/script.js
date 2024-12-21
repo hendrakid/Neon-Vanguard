@@ -16,7 +16,6 @@ const imagePaths = {
   headClothes: "src/head-clothes.png",
   bodyArmor: "src/body-armor.png",
   headArmor: "src/head-armor.png",
-  
 };
 
 // Mapping of transition videos
@@ -90,6 +89,8 @@ window.onload = function () {
         container.style.display = "block"; // Show container once preloading is complete
         container.style.opacity = 1; // Show container once preloading is complete
 
+        const bodyBase = document.getElementById("base-body");
+        bodyBase.src = imagePaths.bodyBase;
         setImage("head", false);
         setImage("body", false);
         moveBackground(125);
@@ -355,12 +356,8 @@ function downloadImage() {
   hideButtonGroup();
   const container = document.getElementById("container");
   const buttonContainer = document.getElementById("button-container");
-  const transitionBodyVideo = document.getElementById("transition-body-video");
-  const transitionHeadVideo = document.getElementById("transition-head-video");
 
   // Temporarily hide the button group and transition video to exclude them from the screenshot
-  transitionBodyVideo.style.display = "none";
-  transitionHeadVideo.style.display = "none";
   buttonContainer.style.opacity = 0;
 
   // Use html2canvas to capture the container
