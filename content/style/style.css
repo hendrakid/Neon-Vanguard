@@ -22,8 +22,8 @@ body {
 
 
 .container {
-  width: 100%; 
-  height: 100%; 
+  width: 100%;
+  height: 100%;
   overflow: hidden;
   opacity: 0;
   /* background-color: #f0f0f0; */
@@ -47,14 +47,9 @@ body {
   top: 0;
   left: 50%;
   transform: translateX(-50%);
-  max-width: '100%';
+  max-width: "100%";
   right: auto;
 }
-.aura{
-  display: none;
-  z-index: 2; /* Ensure it's above other elements */
-}
-
 .floating-buttons {
   position: absolute;
   top: 2vh; /* Adjust top position relative to screen height */
@@ -62,10 +57,8 @@ body {
   display: flex;
   flex-direction: column;
   align-items: flex-end;
-  z-index: 999; /* Ensure it's above other elements */
+  z-index: 999;
 }
-
-
 
 /* Button group container styles */
 .button-group-container {
@@ -75,7 +68,7 @@ body {
   max-height: 2000px;
   min-width: 100px;
   min-height: 100px;
-  background-image: url('../src/UI/menu-box.png');
+  background-image: url("../src/UI/menu-box.png");
   background-size: cover;
   background-position: center;
   background-repeat: no-repeat;
@@ -90,7 +83,6 @@ body {
   z-index: 1000; /* Ensure it's above other elements */
 }
 
-
 /* Adjust button-group-container for better interaction */
 .button-group-container {
   position: relative; /* Adjust as needed */
@@ -103,7 +95,6 @@ body {
   height: 100%;
   background-color: rgba(0, 0, 0, 0.5); /* Semi-transparent black */
 }
-
 
 /* Style for the toggle button */
 .toggle-button {
@@ -139,8 +130,6 @@ body {
   transform: scale(1.1); /* Optional: slight scale effect */
 }
 
-
-
 .middle-bottom-div {
   position: absolute;
   bottom: -5px; /* Adjust this value for desired spacing */
@@ -152,15 +141,6 @@ body {
   text-align: center;
   cursor: pointer;
 }
-
-
-
-
-
-
-
-
-
 
 .collapse-button img {
   width: 5vh; /* Adjust width relative to screen height */
@@ -186,5 +166,3 @@ body {
 .hidden {
   display: none;
 }
-
-

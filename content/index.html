@@ -24,13 +24,18 @@
     <div class="container" id="container">
       <img id="background" src="src/background.jpg" class="background" />
       <div class="image-container">
-        <video id="aura-video" class="image overlay aura" loop></video>
-        <img id="base-body" src="src/body.png" class="image overlay" />
-        <img id="body" class="image overlay" />
-        <img id="head" class="image overlay" />
+        <img
+          id="base-body"
+          src="src/body.png"
+          class="image overlay"
+          style="z-index: 1"
+        />
+        <img id="body" class="image overlay" style="z-index: 2" />
+        <img id="head" class="image overlay" style="z-index: 3" />
         <!-- Transition Video Element -->
-        <video id="transition-body-video" class="image overlay"></video>
-        <video id="transition-head-video" class="image overlay"></video>
+        <video id="transition-body-video" class="image overlay" style="z-index: 12"></video>
+        <video id="transition-head-video" class="image overlay" style="z-index: 13"></video>
+        <video id="aura-video" class="image overlay " style="z-index: 14" loop></video>
       </div>
 
       <!-- Floating window -->

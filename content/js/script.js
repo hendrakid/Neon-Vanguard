@@ -9,12 +9,14 @@ let preloadComplete = false; // Flag to check if preloading is complete
 
 // Mapping of attributes to their image sources
 const imagePaths = {
-  bodyArmor: "src/body-armor.png",
-  bodyClothes: "src/body-clothes.png",
-  headArmor: "src/head-armor.png",
-  headClothes: "src/head-clothes.png",
   bodyBase: "src/body.png",
   background: "src/background.jpg",
+  menuBox: "src/UI/menu-box.png",
+  bodyClothes: "src/body-clothes.png",
+  headClothes: "src/head-clothes.png",
+  bodyArmor: "src/body-armor.png",
+  headArmor: "src/head-armor.png",
+  
 };
 
 // Mapping of transition videos
