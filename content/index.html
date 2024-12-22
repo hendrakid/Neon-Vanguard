@@ -181,6 +181,7 @@
       id="loading-video"
       src="./src/UI/loading.webm"
       class="loading"
+      autoplay
       loop
       crossorigin="anonymous"
     ></video>
@@ -330,35 +331,34 @@
       window.onload = function () {
         console.log("start preload " + new Date().toLocaleTimeString());
         
-        
+
         loading.style.opacity = 1;
         loading.onloadedmetadata = function () {
             aura.play();
-            aura.onended = function () {};
           };
 
         container.style.display = "none";
         container.style.opacity = 0;
 
-        Promise.all([preloadImages(), preloadVideos()]).then(() => {
-          setTimeout(() => {
-            console.log("finish preload " + new Date().toLocaleTimeString());
+        // Promise.all([preloadImages(), preloadVideos()]).then(() => {
+        //   setTimeout(() => {
+        //     console.log("finish preload " + new Date().toLocaleTimeString());
 
-            container.style.display = "block";
-            container.style.opacity = 1;
+        //     container.style.display = "block";
+        //     container.style.opacity = 1;
 
-            bodyBase.src = imagePaths.bodyBase;
-            background.src = imagePaths.background;
+        //     bodyBase.src = imagePaths.bodyBase;
+        //     background.src = imagePaths.background;
 
-            loading.style.opacity = 0;
-            setTimeout(() => {
-              setImage("head", false);
-              setImage("body", false);
-              moveBackground(50);
-              loading.remove();
-            }, 50);
-          }, 1000);
-        });
+        //     loading.style.opacity = 0;
+        //     setTimeout(() => {
+        //       setImage("head", false);
+        //       setImage("body", false);
+        //       moveBackground(50);
+        //       loading.remove();
+        //     }, 50);
+        //   }, 1000);
+        // });
       };
 
       function preloadImages() {
@@ -578,7 +578,6 @@
           aura.style.display = "block";
           aura.onloadedmetadata = function () {
             aura.play();
-            aura.onended = function () {};
           };
         } else {
           aura.style.display = "none";
