@@ -351,12 +351,13 @@
             background.src = imagePaths.background;
 
             loading.style.opacity = 0;
+            setImage("head", false);
+            setImage("body", false);
+            moveBackground(50);
+
             setTimeout(() => {
-              setImage("head", false);
-              setImage("body", false);
-              moveBackground(50);
               loading.remove();
-            }, 50);
+            }, 500);
           }, 1000);
         });
       };
