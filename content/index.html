@@ -350,10 +350,10 @@
             bodyBase.src = imagePaths.bodyBase;
             background.src = imagePaths.background;
 
+            moveBackground(50);
             loading.style.opacity = 0;
             setImage("head", false);
             setImage("body", false);
-            moveBackground(50);
 
             setTimeout(() => {
               loading.remove();
