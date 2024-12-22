@@ -179,9 +179,7 @@
   <body>
     <video
       id="loading-video"
-      src="./src/UI/loading.webm"
       class="loading"
-      autoplay
       loop
       crossorigin="anonymous"
     ></video>
@@ -333,9 +331,10 @@
         
 
         loading.style.opacity = 1;
+        loading.src = "./src/UI/loading.webm";
         loading.onloadedmetadata = function () {
-            aura.play();
-          };
+          loading.play();
+        };
 
         container.style.display = "none";
         container.style.opacity = 0;
@@ -614,6 +613,7 @@
         });
       }
 
+      loading.onloadedmetadata    
       menuToggle.addEventListener("click", function () {
         showButtonGroup();
       });
