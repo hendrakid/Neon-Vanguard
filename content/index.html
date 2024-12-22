@@ -328,10 +328,16 @@
 
       window.onload = function () {
         console.log("start preload " + new Date().toLocaleTimeString());
+        
+        
+        loading.style.opacity = 1;
+        loading.onloadedmetadata = function () {
+            aura.play();
+            aura.onended = function () {};
+          };
 
         container.style.display = "none";
         container.style.opacity = 0;
-        loading.style.opacity = 1;
 
         Promise.all([preloadImages(), preloadVideos()]).then(() => {
           setTimeout(() => {
