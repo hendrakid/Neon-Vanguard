@@ -194,16 +194,19 @@
           id="aura-video"
           class="image overlay"
           loop
+          muted
           crossorigin="anonymous"
         ></video>
         <video
           id="transition-body-video"
           class="image overlay"
+          muted
           crossorigin="anonymous"
         ></video>
         <video
           id="transition-head-video"
           class="image overlay"
+          muted
           crossorigin="anonymous"
         ></video>
       </div>
@@ -357,7 +360,7 @@
 
             setTimeout(() => {
               loading.remove();
-            }, 500);
+            }, 250);
           }, 1000);
         });
       };
