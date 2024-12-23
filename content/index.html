@@ -626,6 +626,8 @@
           maxMovement;
 
         background.style.transform = `translateX(${clampedValue}px)`;
+        console.log(clampedValue);
+        return clampedValue;
       }
 
       function downloadImage() {
@@ -656,6 +658,8 @@
           bgOffsetX = 0;
           bgOffsetY = (canvas.height - bgDrawHeight) / 2;
         }
+
+        console.log(bgOffsetX, bgOffsetY, bgDrawWidth, bgDrawHeight);
 
         context.drawImage(
           image2,
