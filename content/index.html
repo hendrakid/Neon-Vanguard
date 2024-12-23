@@ -637,7 +637,36 @@
         let context = canvas.getContext("2d");
 
         let image2 = document.getElementById("background");
-        context.drawImage(image2, 0, 0, canvasWidth, canvasHeight);
+
+        const bgAspectRatio = image2.width / image2.height;
+        const canvasAspectRatio = canvas.width / canvas.height;
+
+        let bgDrawWidth, bgDrawHeight, bgOffsetX, bgOffsetY;
+
+        if (bgAspectRatio > canvasAspectRatio) {
+          // Background is wider than the canvas
+          bgDrawWidth = canvas.height * bgAspectRatio;
+          bgDrawHeight = canvas.height;
+          bgOffsetX = (canvas.width - bgDrawWidth) / 2;
+          bgOffsetY = 0;
+        } else {
+          // Background is taller than the canvas
+          bgDrawWidth = canvas.width;
+          bgDrawHeight = canvas.width / bgAspectRatio;
+          bgOffsetX = 0;
+          bgOffsetY = (canvas.height - bgDrawHeight) / 2;
+        }
+
+        context.drawImage(
+          image2,
+          bgOffsetX,
+          bgOffsetY,
+          bgDrawWidth,
+          bgDrawHeight
+        );
+
+        // let image2 = document.getElementById("background");
+        // context.drawImage(image2, 0, 0, canvasWidth, canvasHeight);
         let image3 = document.getElementById("base-body");
         context.drawImage(image3, 0, 0, canvasWidth, canvasHeight);
         let image4 = document.getElementById("body");
