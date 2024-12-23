@@ -629,8 +629,8 @@
       }
 
       function downloadImage() {
-        let canvasWidth = 4500,
-          canvasHeight = 4500,
+        let canvasWidth = 1500,
+          canvasHeight = 1500,
           canvas = document.createElement("canvas");
         canvas.height = canvasWidth;
         canvas.width = canvasHeight;
@@ -640,12 +640,12 @@
 
         let image2 = document.getElementById("background");
         context.drawImage(image2, 0, 0, canvasWidth, canvasHeight);
-        // let image3 = document.getElementById("base-body");
-        // context.drawImage(image3, 0, 0, canvasWidth, canvasHeight);
-        // let image4 = document.getElementById("body");
-        // context.drawImage(image4, 0, 0, canvasWidth, canvasHeight);
-        // let image5 = document.getElementById("head");
-        // context.drawImage(image5, 0, 0, canvasWidth, canvasHeight);
+        let image3 = document.getElementById("base-body");
+        context.drawImage(image3, 0, 0, canvasWidth, canvasHeight);
+        let image4 = document.getElementById("body");
+        context.drawImage(image4, 0, 0, canvasWidth, canvasHeight);
+        let image5 = document.getElementById("head");
+        context.drawImage(image5, 0, 0, canvasWidth, canvasHeight);
         let image6 = document.getElementById("aura-video");
         context.drawImage(image6, 0, 0, canvasWidth, canvasHeight);
 
