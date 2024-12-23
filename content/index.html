@@ -626,11 +626,10 @@
           maxMovement;
 
         background.style.transform = `translateX(${clampedValue}px)`;
-        console.log(clampedValue);
         return clampedValue;
       }
 
-      function downloadImage() {
+      function downloadImage(offsetX) {
         let canvasWidth = 1500,
           canvasHeight = 1500,
           canvas = document.createElement("canvas");
@@ -640,8 +639,8 @@
 
         let image2 = document.getElementById("background");
 
-        const bgAspectRatio = image2.width / image2.height;
-        const canvasAspectRatio = canvas.width / canvas.height;
+        let bgAspectRatio = image2.width / image2.height;
+        let canvasAspectRatio = canvas.width / canvas.height;
 
         let bgDrawWidth, bgDrawHeight, bgOffsetX, bgOffsetY;
 
@@ -658,6 +657,9 @@
           bgOffsetX = 0;
           bgOffsetY = (canvas.height - bgDrawHeight) / 2;
         }
+
+        // Adjust the offsetX for scaling
+        let scaledOffsetX = offsetX * (bgDrawWidth / image2.offsetWidth);
 
         console.log(bgOffsetX, bgOffsetY, bgDrawWidth, bgDrawHeight);
 
@@ -727,7 +729,8 @@
       });
 
       downloadButton.addEventListener("click", () => {
-        downloadImage();
+        let offsetX = moveBackground(slider.value); // Get the x-offset
+        downloadImage(offsetX);
       });
     </script>
   </body>
