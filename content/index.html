@@ -629,17 +629,19 @@
       }
 
       function downloadImage() {
-        let 
-          canvas = document.createElement("canvas");
+        let canvas = document.createElement("canvas");
         canvas.height = canvasWidth;
         canvas.width = canvasHeight;
         let context = canvas.getContext("2d");
 
         context.fillRect(0, 0, canvasWidth, canvasHeight);
 
+        ///
         let image2 = document.getElementById("background");
+
         const img = image2;
-        const ctx = canvas.getContext("2d");
+        // const canvas = document.createElement("canvas");
+        // const ctx = canvas.getContext("2d");
         const imageNaturalWidth = img.naturalWidth;
         const imageNaturalHeight = img.naturalHeight;
         const imageWidth = img.offsetWidth;
@@ -691,8 +693,9 @@
           }
         }
 
+        context.drawImage(img, sx, sy, sWidth, sHeight, dx, dy, dWidth, dHeight);
 
-
+        ///
 
         context.drawImage(image2, 0, 0, canvasWidth, canvasHeight);
         let image3 = document.getElementById("base-body");
