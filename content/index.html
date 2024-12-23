@@ -638,9 +638,7 @@
         canvas.width = canvasHeight;
         let context = canvas.getContext("2d");
 
-        let image2 = document.getElementById("background");
-
-        let bgAspectRatio = image2.width / image2.height;
+        let bgAspectRatio = background.width / background.height;
         let canvasAspectRatio = canvas.width / canvas.height;
 
         let bgDrawWidth, bgDrawHeight, bgOffsetX, bgOffsetY;
@@ -660,27 +658,21 @@
         }
 
         // Adjust the offsetX for scaling
-        let scaledOffsetX = offsetX * (bgDrawWidth / image2.offsetWidth);
+        let scaledOffsetX = offsetX * (bgDrawWidth / background.offsetWidth);
 
         // Draw the background image with the adjusted x-offset
         context.drawImage(
-          image2,
+          background,
           scaledOffsetX,
           bgOffsetY,
           bgDrawWidth,
           bgDrawHeight
         );
 
-        // let image2 = document.getElementById("background");
-        // context.drawImage(image2, 0, 0, canvasWidth, canvasHeight);
-        let image3 = document.getElementById("base-body");
-        context.drawImage(image3, 0, 0, canvasWidth, canvasHeight);
-        let image4 = document.getElementById("body");
-        context.drawImage(image4, 0, 0, canvasWidth, canvasHeight);
-        let image5 = document.getElementById("head");
-        context.drawImage(image5, 0, 0, canvasWidth, canvasHeight);
-        let image6 = document.getElementById("aura-video");
-        context.drawImage(image6, 0, 0, canvasWidth, canvasHeight);
+        context.drawImage(bodyBase, 0, 0, canvasWidth, canvasHeight);
+        context.drawImage(body, 0, 0, canvasWidth, canvasHeight);
+        context.drawImage(head, 0, 0, canvasWidth, canvasHeight);
+        context.drawImage(aura, 0, 0, canvasWidth, canvasHeight);
 
         let link = document.createElement("a");
         link.href = canvas.toDataURL("image/png");
