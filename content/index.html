@@ -629,77 +629,14 @@
       }
 
       function downloadImage() {
-        let 
-        // canvasWidth = 1500,
-        // canvasHeight = 1500,
-        canvas = document.createElement("canvas");
-        // canvas.height = canvasWidth;
-        // canvas.width = canvasHeight;
+        let canvasWidth = 1500,
+          canvasHeight = 1500,
+          canvas = document.createElement("canvas");
+        canvas.height = canvasWidth;
+        canvas.width = canvasHeight;
         let context = canvas.getContext("2d");
 
-        // context.fillRect(0, 0, canvasWidth, canvasHeight);
-
-        ///
         let image2 = document.getElementById("background");
-
-        const img = image2;
-        // const canvas = document.createElement("canvas");
-        // const ctx = canvas.getContext("2d");
-        const imageNaturalWidth = img.naturalWidth;
-        const imageNaturalHeight = img.naturalHeight;
-        const imageWidth = img.offsetWidth;
-        const imageHeight = img.offsetHeight;
-        const objectFit = window.getComputedStyle(img)["object-fit"];
-
-        const aspectRatio = imageNaturalWidth / imageNaturalHeight;
-
-        let canvasWidth = imageNaturalWidth;
-        let canvasHeight = imageNaturalHeight;
-
-        if (objectFit === "cover") {
-          const containerWidth = img.parentElement.offsetWidth;
-          const containerHeight = img.parentElement.offsetHeight;
-          const containerAspectRatio = containerWidth / containerHeight;
-
-          if (aspectRatio > containerAspectRatio) {
-            canvasHeight = containerHeight;
-            canvasWidth = containerHeight * aspectRatio;
-          } else {
-            canvasWidth = containerWidth;
-            canvasHeight = containerWidth / aspectRatio;
-          }
-        }
-
-        canvas.width = canvasWidth;
-        canvas.height = canvasHeight;
-
-        let sx = 0;
-        let sy = 0;
-        let sWidth = imageNaturalWidth;
-        let sHeight = imageNaturalHeight;
-        let dx = 0;
-        let dy = 0;
-        let dWidth = canvasWidth;
-        let dHeight = canvasHeight;
-
-        if (objectFit === "cover") {
-          const containerWidth = img.parentElement.offsetWidth;
-          const containerHeight = img.parentElement.offsetHeight;
-          const containerAspectRatio = containerWidth / containerHeight;
-
-          if (aspectRatio > containerAspectRatio) {
-            sWidth = imageNaturalHeight * containerAspectRatio;
-            sx = (imageNaturalWidth - sWidth) / 2;
-          } else {
-            sHeight = imageNaturalWidth / containerAspectRatio;
-            sy = (imageNaturalHeight - sHeight) / 2;
-          }
-        }
-
-        context.drawImage(img, sx, sy, sWidth, sHeight, dx, dy, dWidth, dHeight);
-
-        ///
-
         context.drawImage(image2, 0, 0, canvasWidth, canvasHeight);
         let image3 = document.getElementById("base-body");
         context.drawImage(image3, 0, 0, canvasWidth, canvasHeight);
