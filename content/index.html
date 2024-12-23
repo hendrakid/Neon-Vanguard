@@ -629,9 +629,12 @@
       }
 
       function downloadImage() {
-        let canvas = document.createElement("canvas");
-        canvas.height = canvasWidth;
-        canvas.width = canvasHeight;
+        let 
+        // canvasWidth = 1500,
+        // canvasHeight = 1500,
+        canvas = document.createElement("canvas");
+        // canvas.height = canvasWidth;
+        // canvas.width = canvasHeight;
         let context = canvas.getContext("2d");
 
         context.fillRect(0, 0, canvasWidth, canvasHeight);
