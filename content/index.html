@@ -663,9 +663,10 @@
 
         console.log(bgOffsetX, bgOffsetY, bgDrawWidth, bgDrawHeight);
 
+        // Draw the background image with the adjusted x-offset
         context.drawImage(
-          image2,
-          bgOffsetX,
+          backgroundImage,
+          scaledOffsetX,
           bgOffsetY,
           bgDrawWidth,
           bgDrawHeight
