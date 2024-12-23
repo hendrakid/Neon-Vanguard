@@ -672,7 +672,8 @@
         context.drawImage(bodyBase, 0, 0, canvasWidth, canvasHeight);
         context.drawImage(body, 0, 0, canvasWidth, canvasHeight);
         context.drawImage(head, 0, 0, canvasWidth, canvasHeight);
-        context.drawImage(aura, 0, 0, canvasWidth, canvasHeight);
+        if (isAuraActive)
+          context.drawImage(aura, 0, 0, canvasWidth, canvasHeight);
 
         let link = document.createElement("a");
         link.href = canvas.toDataURL("image/png");
