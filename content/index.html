@@ -374,8 +374,6 @@
             )
           )
             .then(() => {
-              console.log("Images cached as Base64:", cache);
-
               allToggle.src = cache.buttonSwitchOff;
               headToggle.src = cache.buttonSwitchOff;
               bodyToggle.src = cache.buttonSwitchOff;
@@ -394,9 +392,12 @@
           const loadVideo = (videoElement, src) => {
             return new Promise((resolve, reject) => {
               videoElement.onloadeddata = () => {
-                resolve(videoElement);
-                videoElement.style.opacity = 0;
                 videoElement.play();
+                videoElement.onended = function () {
+                  videoElement.style.opacity = 0;
+                  videoElement.pause();
+                  resolve(videoElement);
+                };
               };
               videoElement.onerror = () =>
                 reject(new Error(`Failed to load video: ${src}`));
