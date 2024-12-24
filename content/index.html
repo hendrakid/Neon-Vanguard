@@ -44,12 +44,14 @@
       }
 
       .overlay {
-        transition: opacity 0.3s ease;
         position: absolute;
         top: 0;
         left: 50%;
         transform: translateX(-50%);
         right: auto;
+      }
+      .opacity-ease {
+        transition: opacity 0.3s ease;
       }
 
       .floating-buttons {
@@ -204,8 +206,8 @@
       <img id="background" class="background" crossorigin="anonymous" />
       <div class="image-container">
         <img id="base-body" class="image overlay" crossorigin="anonymous" />
-        <img id="body-armor" class="image overlay" crossorigin="anonymous" />
-        <img id="head-armor" class="image overlay" crossorigin="anonymous" />
+        <img id="body-armor" class="image overlay opacity-ease" crossorigin="anonymous" />
+        <img id="head-armor" class="image overlay opacity-ease" crossorigin="anonymous" />
         <img id="body-clothes" class="image overlay" crossorigin="anonymous" />
         <img id="head-clothes" class="image overlay" crossorigin="anonymous" />
         <video
