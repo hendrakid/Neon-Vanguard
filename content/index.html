@@ -365,6 +365,7 @@
       };
 
       const cache = {};
+      const cache_imageMenuBox = new Image();
 
       window.onload = function () {
         console.log("start preload " + new Date().toLocaleTimeString());
@@ -539,9 +540,7 @@
 
       function setActiveToggle(element, activated) {
         element.classList.remove("on");
-        // Remove 'on' class
         element.classList.add("off");
-        // Remove 'off' class
 
         // Use a small timeout to allow the transition to take effect before changing the image source
         setTimeout(() => {
