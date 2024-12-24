@@ -372,8 +372,6 @@
         loading.onloadedmetadata = function () {
           loading.play();
 
-          buttonGroupContainer.style.backgroundImage = `url(${cache_imageMenuBox.src})`;
-
           // Function to create a promise for image loading
           const loadImage = (imageElement, src) => {
             return new Promise((resolve, reject) => {
@@ -425,6 +423,7 @@
               headToggle.src = cache_imageSwitchOff.src;
               bodyToggle.src = cache_imageSwitchOff.src;
               auraToggle.src = cache_imageSwitchOff.src;
+              buttonGroupContainer.style.backgroundImage = `url(${cache_imageMenuBox.src})`;
 
               headArmor.style.opacity = 0;
               bodyArmor.style.opacity = 0;
