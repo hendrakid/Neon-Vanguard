@@ -550,99 +550,89 @@
           }
         }, 100);
       }
-      function playTransition(attribute, activated, hasTransition, callback) {
+      function playTransition(attribute, activated, callback) {
         hideButtonGroup();
 
-        if (!hasTransition) {
-          setImage(attribute, value);
-          callback();
-          return;
+        let videoElement = null;
+        if (attribute === "head") {
+          videoElement = transitionHead;
+        } else if (attribute === "body") {
+          videoElement = transitionBody;
         }
 
-        const videoElement = document.getElementById(
-          "transition-" + attribute + "-video"
-        );
-        const videoSrc = "./src/transition_" + attribute + ".webm";
+        if (!activated) {
+          videoElement.pause();
+          videoElement.currentTime = videoElement.duration;
+          videoElement.style.opacity = 1;
+          // Start at the end
 
-        if (videoElement.src !== videoSrc) videoElement.src = videoSrc;
-        videoElement.style.display = "block";
-        // Show the video element
-
-        videoElement.onloadedmetadata = function () {
-          if (!activated) {
-            videoElement.pause();
-            videoElement.currentTime = videoElement.duration;
-            // Start at the end
-
-            let frame = 0;
-            const stepBackward = () => {
-              if (videoElement.currentTime > 0) {
-                videoElement.currentTime = Math.max(
-                  videoElement.currentTime - 0.075,
-                  0
-                );
-                // Move back one frame (approximately 33ms for 30fps)
-                videoElement.requestVideoFrameCallback(() => {
-                  stepBackward();
-                  // Call next frame
-                  if (frame === 1) setImage(attribute, activated);
-                  frame++;
-                });
-              } else {
-                videoElement.pause();
-                setTimeout(() => {
-                  videoElement.style.display = "none";
-                }, 50);
-                // Hide the video element
-                callback();
-                // Execute callback after reverse playback
-              }
-            };
-            stepBackward();
-            // Start the reverse playback loop
-          } else {
-            videoElement.play();
-
-            // When the video ends, hide it and execute the callback
-            videoElement.onended = function () {
-              setImage(attribute, activated);
+          let frame = 0;
+          const stepBackward = () => {
+            if (videoElement.currentTime > 0) {
+              videoElement.currentTime = Math.max(
+                videoElement.currentTime - 0.075,
+                0
+              );
+              // Move back one frame (approximately 33ms for 30fps)
+              videoElement.requestVideoFrameCallback(() => {
+                stepBackward();
+                // Call next frame
+                if (frame === 1) setImage(attribute, activated);
+                frame++;
+              });
+            } else {
               videoElement.pause();
               setTimeout(() => {
-                videoElement.style.display = "none";
+                videoElement.style.opacity = 0;
               }, 50);
-
+              // Hide the video element
               callback();
-            };
+              // Execute callback after reverse playback
+            }
+          };
+          stepBackward();
+          // Start the reverse playback loop
+        } else {
+          videoElement.style.opacity = 1;
+          videoElement.play();
 
-            // Handle video playback errors
-            videoElement.onerror = function () {
-              console.error(`Error playing transition video: ${videoSrc}`);
-              videoElement.style.display = "none";
-              callback();
-              // Proceed even if the video fails
-            };
-          }
-        };
+          // When the video ends, hide it and execute the callback
+          videoElement.onended = function () {
+            setImage(attribute, activated);
+            videoElement.pause();
+            setTimeout(() => {
+              videoElement.style.opacity = 0;
+            }, 50);
 
-        // Handle cases where the video fails to load metadata
-        videoElement.onerror = function () {
-          console.error(`Failed to load video metadata: ${videoSrc}`);
-          videoElement.style.display = "none";
-          callback();
-          // Proceed even if the video fails
-        };
+            callback();
+          };
+
+          // Handle video playback errors
+          videoElement.onerror = function () {
+            console.error(`Error playing transition video: ${videoSrc}`);
+            videoElement.style.opacity = 0;
+            callback();
+            // Proceed even if the video fails
+          };
+        }
       }
       function setImage(attribute, activated) {
-        const element = document.getElementById(attribute);
-
-        if (activated) {
-          element.src = "./src/" + attribute + "-armor.webp";
-          element.style.display = "block";
-          // Show image
-        } else {
-          element.src = "./src/" + attribute + "-clothes.webp";
-          element.style.display = "block";
-          // Show image
+        if (attribute === "head") {
+          if (activated) {
+            headArmor.style.opacity = 1;
+            headClothes.style.opacity = 0;
+          } else {
+            headArmor.style.opacity = 0;
+            headClothes.style.opacity = 1;
+          }
+        } else if (attribute === "body") {
+          if (activated) {
+            bodyArmor.style.opacity = 1;
+            bodyClothes.style.opacity = 0;
+          } else {
+            bodyArmor.style.opacity = 0;
+            bodyClothes.style.opacity = 1;
+          }
         }
       }
 
@@ -681,6 +671,7 @@
         toggleButtonHandler(headToggle, "head", isAllActive);
         toggleButtonHandler(bodyToggle, "body", isAllActive);
       }
+
       function toggleButtonHandler(element, attribute, forceCondition = null) {
         const currentSrc = element.src;
         var activated = currentSrc.includes("button-switch-off.webp");
@@ -710,6 +701,7 @@
           isTransitioning = false;
         });
       }
+
       function playAura(element) {
         const currentSrc = element.src;
         var activated = currentSrc.includes("button-switch-off.webp");
