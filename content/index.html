@@ -50,7 +50,10 @@
         transform: translateX(-50%);
         right: auto;
       }
-      .opacity-ease {
+      .opacity-ease-02 {
+        transition: opacity 0.2s ease;
+      }
+      .opacity-ease-03 {
         transition: opacity 0.3s ease;
       }
 
@@ -206,8 +209,8 @@
       <img id="background" class="background" crossorigin="anonymous" />
       <div class="image-container">
         <img id="base-body" class="image overlay" crossorigin="anonymous" />
-        <img id="body-armor" class="image overlay opacity-ease" crossorigin="anonymous" />
-        <img id="head-armor" class="image overlay opacity-ease" crossorigin="anonymous" />
+        <img id="body-armor" class="image overlay opacity-ease-02" crossorigin="anonymous" />
+        <img id="head-armor" class="image overlay opacity-ease-02" crossorigin="anonymous" />
         <img id="body-clothes" class="image overlay" crossorigin="anonymous" />
         <img id="head-clothes" class="image overlay" crossorigin="anonymous" />
         <video
@@ -216,8 +219,8 @@
           muted
           crossorigin="anonymous"
         ></video>
-        <video id="transition-body-video" class="image overlay" muted></video>
-        <video id="transition-head-video" class="image overlay" muted></video>
+        <video id="transition-body-video" class="image overlay opacity-ease-03" muted></video>
+        <video id="transition-head-video" class="image overlay opacity-ease-03" muted></video>
       </div>
       <div class="floating-buttons" id="button-container">
         <div class="collapse-button" id="collapse-button">
