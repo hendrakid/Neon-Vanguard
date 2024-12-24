@@ -115,7 +115,7 @@
       }
 
       .toggle-button.logo {
-        width: 30vw;
+        width: 25vw;
         height: auto;
       }
 
@@ -198,13 +198,7 @@
     </style>
   </head>
   <body>
-    <video
-      id="loading-video"
-      class="loading"
-      loop
-      muted
-      crossorigin="anonymous"
-    ></video>
+    <video id="loading-video" class="loading" loop muted></video>
     <div class="container" id="container">
       <img id="background" class="background" crossorigin="anonymous" />
       <div class="image-container">
@@ -220,18 +214,8 @@
           muted
           crossorigin="anonymous"
         ></video>
-        <video
-          id="transition-body-video"
-          class="image overlay"
-          muted
-          crossorigin="anonymous"
-        ></video>
-        <video
-          id="transition-head-video"
-          class="image overlay"
-          muted
-          crossorigin="anonymous"
-        ></video>
+        <video id="transition-body-video" class="image overlay" muted></video>
+        <video id="transition-head-video" class="image overlay" muted></video>
       </div>
       <div class="floating-buttons" id="button-container">
         <div class="collapse-button" id="collapse-button">
@@ -697,7 +681,6 @@
       }
 
       function playAura(element) {
-        const currentSrc = element.src;
         var activated = element.classList.contains("off");
         setActiveToggle(element, activated);
 
@@ -765,8 +748,15 @@
         );
 
         context.drawImage(bodyBase, 0, 0, canvasWidth, canvasHeight);
-        context.drawImage(body, 0, 0, canvasWidth, canvasHeight);
-        context.drawImage(head, 0, 0, canvasWidth, canvasHeight);
+        
+        if (isBodyActive)
+          context.drawImage(bodyArmor, 0, 0, canvasWidth, canvasHeight);
+        else context.drawImage(bodyClothes, 0, 0, canvasWidth, canvasHeight);
+        
+        if (isHeadActive)
+          context.drawImage(headArmor, 0, 0, canvasWidth, canvasHeight);
+        else context.drawImage(headClothes, 0, 0, canvasWidth, canvasHeight);
+        
         if (isAuraActive)
           context.drawImage(aura, 0, 0, canvasWidth, canvasHeight);
 
