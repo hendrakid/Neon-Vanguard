@@ -211,7 +211,6 @@
         <video
           id="aura-video"
           class="image overlay"
-          loop
           muted
           crossorigin="anonymous"
         ></video>
@@ -430,10 +429,13 @@
           Promise.all(promises)
             .then(() => {
               console.log("finish preload " + new Date().toLocaleTimeString());
-
+              
               headArmor.style.opacity = 0;
               bodyArmor.style.opacity = 0;
+
+              aura.loop = true;
               aura.style.opacity = 0;
+              
               transitionHead.style.opacity = 0;
               transitionBody.style.opacity = 0;
 
