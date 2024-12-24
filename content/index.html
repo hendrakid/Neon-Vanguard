@@ -209,8 +209,16 @@
       <img id="background" class="background" crossorigin="anonymous" />
       <div class="image-container">
         <img id="base-body" class="image overlay" crossorigin="anonymous" />
-        <img id="body-armor" class="image overlay opacity-ease-02" crossorigin="anonymous" />
-        <img id="head-armor" class="image overlay opacity-ease-02" crossorigin="anonymous" />
+        <img
+          id="body-armor"
+          class="image overlay opacity-ease-02"
+          crossorigin="anonymous"
+        />
+        <img
+          id="head-armor"
+          class="image overlay opacity-ease-02"
+          crossorigin="anonymous"
+        />
         <img id="body-clothes" class="image overlay" crossorigin="anonymous" />
         <img id="head-clothes" class="image overlay" crossorigin="anonymous" />
         <video
@@ -219,8 +227,16 @@
           muted
           crossorigin="anonymous"
         ></video>
-        <video id="transition-body-video" class="image overlay opacity-ease-03" muted></video>
-        <video id="transition-head-video" class="image overlay opacity-ease-03" muted></video>
+        <video
+          id="transition-body-video"
+          class="image overlay opacity-ease-03"
+          muted
+        ></video>
+        <video
+          id="transition-head-video"
+          class="image overlay opacity-ease-03"
+          muted
+        ></video>
       </div>
       <div class="floating-buttons" id="button-container">
         <div class="collapse-button" id="collapse-button">
@@ -338,8 +354,6 @@
         head: "./src/transition_head.webm",
         aura: "./src/aura.webm",
       };
-
-      // new window.onload
 
       // Function to load an image and convert it to Base64
       const loadImageAsBase64 = (src) => {
@@ -459,88 +473,6 @@
             });
         };
       };
-
-      //
-
-      // window.onload = function () {
-      //   console.log("start preload " + new Date().toLocaleTimeString());
-
-      //   loading.style.opacity = 1;
-      //   loading.src = "./src/UI/loading.webm";
-      //   loading.onloadedmetadata = function () {
-      //     loading.play();
-      //   };
-
-      //   container.style.display = "none";
-      //   container.style.opacity = 0;
-
-      //   // promise these
-      //   bodyBase.src = imagePaths.bodyBase;
-      //   bodyArmor.src = imagePaths.bodyArmor;
-      //   headArmor.src = imagePaths.headArmor;
-      //   bodyClothes.src = imagePaths.bodyClothes;
-      //   headClothes.src = imagePaths.headClothes;
-
-      //   aura.src = videoPaths.aura;
-      //   transitionHead.src = videoPaths.head;
-      //   transitionBody.src = videoPaths.body;
-
-      //   background.src = imagePaths.background;
-
-      //   Promise.all([preloadImages(), preloadVideos()]).then(() => {
-      //     console.log("finish preload " + new Date().toLocaleTimeString());
-
-      //     container.style.display = "block";
-      //     container.style.opacity = 1;
-
-      //     loading.style.opacity = 0;
-      //     setImage("head", false);
-      //     setImage("body", false);
-      //     background.onload = function () {
-      //       moveBackground(50);
-      //     };
-      //     // loading.remove();
-      //   });
-      // };
-
-      // function preloadImages() {
-      //   return new Promise((resolve) => {
-      //     let loadedImages = 0;
-      //     const totalImages = Object.values(imagePaths).flat().length;
-
-      //     for (const key in imagePaths) {
-      //       const img = new Image();
-      //       img.src = imagePaths[key];
-      //       img.onload = () => {
-      //         loadedImages++;
-      //         if (loadedImages === totalImages) resolve();
-      //       };
-      //       img.onerror = () => {
-      //         loadedImages++;
-      //         if (loadedImages === totalImages) resolve();
-      //       };
-      //     }
-      //   });
-      // }
-      // function preloadVideos() {
-      //   return new Promise((resolve) => {
-      //     let loadedVideos = 0;
-      //     const totalVideos = Object.keys(videoPaths).length;
-
-      //     for (const key in videoPaths) {
-      //       const video = document.createElement("video");
-      //       video.src = videoPaths[key];
-      //       video.onloadeddata = () => {
-      //         loadedVideos++;
-      //         if (loadedVideos === totalVideos) resolve();
-      //       };
-      //       video.onerror = () => {
-      //         loadedVideos++;
-      //         if (loadedVideos === totalVideos) resolve();
-      //       };
-      //     }
-      //   });
-      // }
 
       function setActiveToggle(element, activated) {
         // Use a small timeout to allow the transition to take effect before changing the image source
@@ -687,8 +619,10 @@
         if (forceCondition === null) {
           if (isHeadActive && isBodyActive && !isAllActive) {
             setActiveToggle(allToggle, true);
+            isAllActive = true;
           } else if ((!isHeadActive || !isBodyActive) && isAllActive) {
             setActiveToggle(allToggle, false);
+            isAllActive = false;
           }
         }
 
