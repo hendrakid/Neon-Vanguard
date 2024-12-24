@@ -63,6 +63,7 @@
       }
 
       .button-group-container {
+        position: relative;
         width: 50vw;
         height: 50vw;
         max-width: 2000px;
@@ -81,10 +82,6 @@
         gap: 1vw;
         overflow: hidden;
         z-index: 1000;
-      }
-
-      .button-group-container {
-        position: relative;
       }
 
       .menu-background {
@@ -184,6 +181,18 @@
         object-fit: contain;
         z-index: 10;
       }
+      .menu-background {
+        transition: opacity 0.3s ease, transform 0.3s ease;
+        position: absolute;
+        display: flex;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background-color: rgb(0, 0, 0);
+        /* object-fit: contain; */
+        z-index: 10;
+      }
     </style>
   </head>
   <body>
@@ -261,6 +270,8 @@
           <div class="middle-bottom-div">
             <img id="buttonDownload" class="toggle-button logo" />
           </div>
+
+          <img id="menu-box" src="./src/UI/menu-box.webp" class="menu-background" />
           <!-- Menu Button -->
         </div>
         <div
@@ -328,7 +339,7 @@
         buttonDownload: "./src/UI/button-download.webp",
         buttonHeadgear: "./src/UI/button-headgear.webp",
         buttonTransform: "./src/UI/button-transform.webp",
-        menuBox: "./src/UI/menu-box.webp",
+        // menuBox: "./src/UI/menu-box.webp",
       };
 
       const UIImagePathsBase64 = {
@@ -365,7 +376,7 @@
       };
 
       const cache = {};
-      const cache_imageMenuBox = new Image();
+      // const cache_imageMenuBox = new Image();
 
       window.onload = function () {
         console.log("start preload " + new Date().toLocaleTimeString());
@@ -426,14 +437,14 @@
             loadImage(buttonHeadgear, UIImagePaths.buttonHeadgear),
             loadImage(buttonTransform, UIImagePaths.buttonTransform),
 
-            loadImage(cache_imageMenuBox, UIImagePaths.menuBox),
+            // loadImage(cache_imageMenuBox, UIImagePaths.menuBox),
           ];
           // Wait for all assets to load
           Promise.all(promises)
             .then(() => {
               console.log("finish preload " + new Date().toLocaleTimeString());
 
-              buttonGroupContainer.style.backgroundImage = `url(${cache_imageMenuBox.src})`;
+              // buttonGroupContainer.style.backgroundImage = `url(${cache_imageMenuBox.src})`;
 
               headArmor.style.opacity = 0;
               bodyArmor.style.opacity = 0;
