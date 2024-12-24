@@ -393,6 +393,7 @@
               videoElement.onloadeddata = () => {
                 videoElement.play();
                 videoElement.onended = function () {
+                  videoElement.currentTime = 0;
                   videoElement.style.opacity = 0;
                   videoElement.pause();
                   resolve(videoElement);
