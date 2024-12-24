@@ -28,7 +28,6 @@
         width: 100%;
         height: 100%;
         overflow: hidden;
-        opacity: 0;
       }
 
       .image-container {
@@ -427,14 +426,16 @@
               // Perform additional actions here
 
               loading.style.opacity = 0;
+              headArmor.style.opacity = 0;
+              bodyArmor.style.opacity = 0;
+              aura.style.opacity = 0;
+              transitionHead.style.opacity = 0;
+              transitionBody.style.opacity = 0;
+
               background.style.opacity = 1;
               bodyBase.style.opacity = 1;
               bodyClothes.style.opacity = 1;
               headClothes.style.opacity = 1;
-
-              aura.style.opacity = 0;
-              transitionHead.style.opacity = 0;
-              transitionBody.style.opacity = 0;
             }
           )
           .catch((error) => {
