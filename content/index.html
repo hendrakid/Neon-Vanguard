@@ -537,11 +537,11 @@
         // Use a small timeout to allow the transition to take effect before changing the image source
         setTimeout(() => {
           if (activated) {
-            element.src = cache_imageSwitchOn;
+            element.src = cache_imageSwitchOn.src;
             element.classList.remove("off");
             element.classList.add("on");
           } else {
-            element.src = cache_imageSwitchOff;
+            element.src = cache_imageSwitchOff.src;
             element.classList.remove("on");
             element.classList.remove("off");
           }
