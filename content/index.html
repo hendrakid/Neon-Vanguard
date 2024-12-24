@@ -104,6 +104,7 @@
         left: 0;
         width: 100%;
         height: 100%;
+        z-index: -1;
       }
 
       .toggle-button {
@@ -344,7 +345,6 @@
         buttonDownload: "./src/UI/button-download.webp",
         buttonHeadgear: "./src/UI/button-headgear.webp",
         buttonTransform: "./src/UI/button-transform.webp",
-        menuBox: "./src/UI/menu-box.webp",
       };
 
       const UIImagePathsBase64 = {
@@ -381,7 +381,6 @@
       };
 
       const cache = {};
-      const cache_imageMenuBox = new Image();
 
       window.onload = function () {
         console.log("start preload " + new Date().toLocaleTimeString());
@@ -441,15 +440,11 @@
             loadImage(buttonDownload, UIImagePaths.buttonDownload),
             loadImage(buttonHeadgear, UIImagePaths.buttonHeadgear),
             loadImage(buttonTransform, UIImagePaths.buttonTransform),
-
-            loadImage(cache_imageMenuBox, UIImagePaths.menuBox),
           ];
           // Wait for all assets to load
           Promise.all(promises)
             .then(() => {
               console.log("finish preload " + new Date().toLocaleTimeString());
-
-              buttonGroupContainer.style.backgroundImage = `url(${cache_imageMenuBox.src})`;
 
               headArmor.style.opacity = 0;
               bodyArmor.style.opacity = 0;
