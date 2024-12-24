@@ -69,7 +69,6 @@
         max-height: 2000px;
         min-width: 100px;
         min-height: 100px;
-        background-image: url("./src/UI/menu-box.webp");
         background-size: cover;
         background-position: center;
         background-repeat: no-repeat;
@@ -235,44 +234,35 @@
           <!-- Menu Button -->
           <div class="toggle-button">
             <img
+              id="buttonTransform"
               class="toggle-button logo"
               src="./src/UI/button-transform.webp"
             />
-            <img
-              id="toggle-img-all"
-              class="toggle-button switch"
-              src="./src/UI/button-switch-off.webp"
-            />
+            <img id="toggle-img-all" class="toggle-button switch" />
           </div>
           <div class="toggle-button">
             <img
+              id="buttonHeadgear"
               class="toggle-button logo"
               src="./src/UI/button-headgear.webp"
             />
-            <img
-              id="toggle-img-head"
-              class="toggle-button switch"
-              src="./src/UI/button-switch-off.webp"
-            />
+            <img id="toggle-img-head" class="toggle-button switch" />
           </div>
           <div class="toggle-button">
             <img
+              id="buttonClothes"
               class="toggle-button logo"
               src="./src/UI/button-clothes.webp"
             />
-            <img
-              id="toggle-img-body"
-              class="toggle-button switch"
-              src="./src/UI/button-switch-off.webp"
-            />
+            <img id="toggle-img-body" class="toggle-button switch" />
           </div>
           <div class="toggle-button">
-            <img class="toggle-button logo" src="./src/UI/button-aura.webp" />
             <img
-              id="toggle-img-aura"
-              class="toggle-button switch"
-              src="./src/UI/button-switch-off.webp"
+              id="buttonAura"
+              class="toggle-button logo"
+              src="./src/UI/button-aura.webp"
             />
+            <img id="toggle-img-aura" class="toggle-button switch" />
           </div>
           <div class="toggle-button">
             <input
@@ -300,13 +290,19 @@
       </div>
     </div>
     <script type="module" crossorigin="">
-      const downloadButton = document.getElementById("button-download");
+      const buttonDownload = document.getElementById("buttonDownload");
+      const buttonTransform = document.getElementById("buttonTransform");
+      const buttonHeadgear = document.getElementById("buttonHeadgear");
+      const buttonClothes = document.getElementById("buttonClothes");
+      const buttonAura = document.getElementById("buttonAura");
+
       const menuToggle = document.getElementById("menu-toggle");
+      const slider = document.getElementById("slider");
+
       const allToggle = document.getElementById("toggle-img-all");
       const headToggle = document.getElementById("toggle-img-head");
       const bodyToggle = document.getElementById("toggle-img-body");
       const auraToggle = document.getElementById("toggle-img-aura");
-      const slider = document.getElementById("slider");
 
       const bodyBase = document.getElementById("base-body");
       const bodyArmor = document.getElementById("body-armor");
@@ -337,15 +333,26 @@
       let isBodyActive = false;
       let isAuraActive = false;
 
-      const imagePaths = {
+      const contentImagePaths = {
         bodyBase: "./src/body.webp",
         background: "./src/background.webp",
-        menuBox: "./src/UI/menu-box.webp",
         bodyClothes: "./src/body-clothes.webp",
         headClothes: "./src/head-clothes.webp",
         bodyArmor: "./src/body-armor.webp",
         headArmor: "./src/head-armor.webp",
       };
+
+      const UIImagePaths = {
+        menuBox: "./src/UI/menu-box.webp",
+        buttonAura: "./src/UI/button-aura.webp",
+        buttonClothes: "./src/UI/button-clothes.webp",
+        buttonDownload: "./src/UI/button-download.webp",
+        buttonHeadgear: "./src/UI/button-headgear.webp",
+        buttonTransform: "./src/UI/button-transform.webp",
+        buttonSwitchOff: "./src/UI/button-switch-off.webp",
+        buttonSwitchOn: "./src/UI/button-switch-on.webp",
+      };
+
       const videoPaths = {
         body: "./src/transition_body.webm",
         head: "./src/transition_head.webm",
@@ -354,11 +361,30 @@
 
       // new window.onload
 
+      const cache_imageSwitchOn = null;
+      const cache_imageSwitchOff = null;
+      const cache_imageMenuBox = null;
+
       window.onload = function () {
+        console.log("start preload " + new Date().toLocaleTimeString());
         loading.style.opacity = 1;
         loading.src = "./src/UI/loading.webm";
         loading.onloadedmetadata = function () {
           loading.play();
+
+          cache_imageSwitchOn = new Image();
+          cache_imageSwitchOff = new Image();
+          cache_imageMenuBox = new Image();
+          cache_imageSwitchOn.src = UIImagePaths.buttonSwitchOn;
+          cache_imageSwitchOff.src = UIImagePaths.buttonSwitchOff;
+          cache_imageMenuBox.src = UIImagePaths.menuBox;
+
+          allToggle.src = cache_imageSwitchOff.src;
+          headToggle.src = cache_imageSwitchOff.src;
+          bodyToggle.src = cache_imageSwitchOff.src;
+          auraToggle.src = cache_imageSwitchOff.src;
+
+          buttonGroupContainer.style.backgroundImage = `url(${cache_imageMenuBox.src})`;
 
           // Function to create a promise for image loading
           const loadImage = (imageElement, src) => {
@@ -382,15 +408,25 @@
 
           // Create promises for all assets
           const promises = [
-            loadImage(bodyBase, imagePaths.bodyBase),
-            loadImage(bodyArmor, imagePaths.bodyArmor),
-            loadImage(headArmor, imagePaths.headArmor),
-            loadImage(bodyClothes, imagePaths.bodyClothes),
-            loadImage(headClothes, imagePaths.headClothes),
-            loadImage(background, imagePaths.background),
+            loadImage(bodyBase, contentImagePaths.bodyBase),
+            loadImage(bodyArmor, contentImagePaths.bodyArmor),
+            loadImage(headArmor, contentImagePaths.headArmor),
+            loadImage(bodyClothes, contentImagePaths.bodyClothes),
+            loadImage(headClothes, contentImagePaths.headClothes),
+            loadImage(background, contentImagePaths.background),
             loadVideo(aura, videoPaths.aura),
             loadVideo(transitionHead, videoPaths.head),
             loadVideo(transitionBody, videoPaths.body),
+
+            loadImage(buttonAura, UIImagePaths.buttonAura),
+            loadImage(buttonClothes, UIImagePaths.buttonClothes),
+            loadImage(buttonDownload, UIImagePaths.buttonDownload),
+            loadImage(buttonHeadgear, UIImagePaths.buttonHeadgear),
+            loadImage(buttonTransform, UIImagePaths.buttonTransform),
+
+            // loadVideo(transitionBody, UIImagePaths.menuBox),
+            // loadVideo(transitionBody, UIImagePaths.buttonSwitchOff),
+            // loadVideo(transitionBody, UIImagePaths.buttonSwitchOn),
           ];
           // Wait for all assets to load
           Promise.all(promises)
@@ -406,21 +442,9 @@
                 loadedTransitionHead,
                 loadedTransitionBody,
               ]) => {
-                console.log("All assets loaded successfully!");
-
-                // Assign loaded assets to the elements
-                // bodyBase.src = loadedBodyBase.src;
-                // bodyArmor.src = loadedBodyArmor.src;
-                // headArmor.src = loadedHeadArmor.src;
-                // bodyClothes.src = loadedBodyClothes.src;
-                // headClothes.src = loadedHeadClothes.src;
-                // background.src = loadedBackground.src;
-
-                // aura.src = loadedAura.src;
-                // transitionHead.src = loadedTransitionHead.src;
-                // transitionBody.src = loadedTransitionBody.src;
-
-                // Perform additional actions here
+                console.log(
+                  "finish preload " + new Date().toLocaleTimeString()
+                );
 
                 headArmor.style.opacity = 0;
                 bodyArmor.style.opacity = 0;
@@ -535,17 +559,13 @@
         // Use a small timeout to allow the transition to take effect before changing the image source
         setTimeout(() => {
           if (activated) {
-            element.src = "./src/UI/button-switch-on.webp";
-            // Change to 'ON' state
+            element.src = cache_imageSwitchOn;
             element.classList.remove("off");
             element.classList.add("on");
           } else {
-            element.src = "./src/UI/button-switch-off.webp";
-            // Change to 'OFF' state
+            element.src = cache_imageSwitchOff;
             element.classList.remove("on");
-            // Remove 'on' class
             element.classList.remove("off");
-            // Remove 'off' class
           }
         }, 100);
       }
