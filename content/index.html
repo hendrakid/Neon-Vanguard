@@ -193,7 +193,7 @@
         height: 100%;
         background-color: rgb(0, 0, 0);
         object-fit: contain;
-        z-index: 10;
+        z-index: 1001;
       }
     </style>
   </head>
@@ -748,15 +748,15 @@
         );
 
         context.drawImage(bodyBase, 0, 0, canvasWidth, canvasHeight);
-        
+
         if (isBodyActive)
           context.drawImage(bodyArmor, 0, 0, canvasWidth, canvasHeight);
         else context.drawImage(bodyClothes, 0, 0, canvasWidth, canvasHeight);
-        
+
         if (isHeadActive)
           context.drawImage(headArmor, 0, 0, canvasWidth, canvasHeight);
         else context.drawImage(headClothes, 0, 0, canvasWidth, canvasHeight);
-        
+
         if (isAuraActive)
           context.drawImage(aura, 0, 0, canvasWidth, canvasHeight);
 
