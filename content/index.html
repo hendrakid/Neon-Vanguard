@@ -393,7 +393,11 @@
           };
           const loadVideo = (videoElement, src) => {
             return new Promise((resolve, reject) => {
-              videoElement.onloadeddata = () => resolve(videoElement);
+              videoElement.onloadeddata = () => {
+                resolve(videoElement);
+                videoElement.style.opacity = 0;
+                videoElement.play();
+              };
               videoElement.onerror = () =>
                 reject(new Error(`Failed to load video: ${src}`));
               videoElement.src = src;
@@ -408,6 +412,7 @@
             loadImage(bodyClothes, contentImagePaths.bodyClothes),
             loadImage(headClothes, contentImagePaths.headClothes),
             loadImage(background, contentImagePaths.background),
+
             loadVideo(aura, videoPaths.aura),
             loadVideo(transitionHead, videoPaths.head),
             loadVideo(transitionBody, videoPaths.body),
