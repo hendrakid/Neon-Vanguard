@@ -463,12 +463,9 @@
               bodyBase.style.opacity = 1;
               bodyClothes.style.opacity = 1;
               headClothes.style.opacity = 1;
-              
-              moveBackground(50);
 
-              setTimeout(() => {
-                loading.style.opacity = 0;
-              }, 250);
+              moveBackground(50);
+              loading.style.opacity = 0;
             })
             .catch((error) => {
               console.error(error.message);
