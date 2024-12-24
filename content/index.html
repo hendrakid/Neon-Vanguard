@@ -343,14 +343,14 @@
       };
 
       const UIImagePaths = {
-        menuBox: "./src/UI/menu-box.webp",
         buttonAura: "./src/UI/button-aura.webp",
         buttonClothes: "./src/UI/button-clothes.webp",
         buttonDownload: "./src/UI/button-download.webp",
         buttonHeadgear: "./src/UI/button-headgear.webp",
         buttonTransform: "./src/UI/button-transform.webp",
-        buttonSwitchOff: "./src/UI/button-switch-off.webp",
+        menuBox: "./src/UI/menu-box.webp",
         buttonSwitchOn: "./src/UI/button-switch-on.webp",
+        buttonSwitchOff: "./src/UI/button-switch-off.webp",
       };
 
       const videoPaths = {
@@ -361,9 +361,9 @@
 
       // new window.onload
 
-      const cache_imageSwitchOn = null;
-      const cache_imageSwitchOff = null;
-      const cache_imageMenuBox = null;
+      const cache_imageSwitchOn = new Image();
+      const cache_imageSwitchOff = new Image();
+      const cache_imageMenuBox = new Image();
 
       window.onload = function () {
         console.log("start preload " + new Date().toLocaleTimeString());
@@ -371,18 +371,6 @@
         loading.src = "./src/UI/loading.webm";
         loading.onloadedmetadata = function () {
           loading.play();
-
-          cache_imageSwitchOn = new Image();
-          cache_imageSwitchOff = new Image();
-          cache_imageMenuBox = new Image();
-          cache_imageSwitchOn.src = UIImagePaths.buttonSwitchOn;
-          cache_imageSwitchOff.src = UIImagePaths.buttonSwitchOff;
-          cache_imageMenuBox.src = UIImagePaths.menuBox;
-
-          allToggle.src = cache_imageSwitchOff.src;
-          headToggle.src = cache_imageSwitchOff.src;
-          bodyToggle.src = cache_imageSwitchOff.src;
-          auraToggle.src = cache_imageSwitchOff.src;
 
           buttonGroupContainer.style.backgroundImage = `url(${cache_imageMenuBox.src})`;
 
@@ -424,44 +412,35 @@
             loadImage(buttonHeadgear, UIImagePaths.buttonHeadgear),
             loadImage(buttonTransform, UIImagePaths.buttonTransform),
 
-            // loadVideo(transitionBody, UIImagePaths.menuBox),
-            // loadVideo(transitionBody, UIImagePaths.buttonSwitchOff),
-            // loadVideo(transitionBody, UIImagePaths.buttonSwitchOn),
+            loadImage(cache_imageMenuBox, UIImagePaths.menuBox),
+            loadImage(cache_imageSwitchOn, UIImagePaths.buttonSwitchOn),
+            loadImage(cache_imageSwitchOff, UIImagePaths.buttonSwitchOff),
           ];
           // Wait for all assets to load
           Promise.all(promises)
-            .then(
-              ([
-                loadedBodyBase,
-                loadedBodyArmor,
-                loadedHeadArmor,
-                loadedBodyClothes,
-                loadedHeadClothes,
-                loadedBackground,
-                loadedAura,
-                loadedTransitionHead,
-                loadedTransitionBody,
-              ]) => {
-                console.log(
-                  "finish preload " + new Date().toLocaleTimeString()
-                );
+            .then(() => {
+              console.log("finish preload " + new Date().toLocaleTimeString());
 
-                headArmor.style.opacity = 0;
-                bodyArmor.style.opacity = 0;
-                aura.style.opacity = 0;
-                transitionHead.style.opacity = 0;
-                transitionBody.style.opacity = 0;
+              allToggle.src = cache_imageSwitchOff.src;
+              headToggle.src = cache_imageSwitchOff.src;
+              bodyToggle.src = cache_imageSwitchOff.src;
+              auraToggle.src = cache_imageSwitchOff.src;
 
-                background.style.opacity = 1;
-                bodyBase.style.opacity = 1;
-                bodyClothes.style.opacity = 1;
-                headClothes.style.opacity = 1;
+              headArmor.style.opacity = 0;
+              bodyArmor.style.opacity = 0;
+              aura.style.opacity = 0;
+              transitionHead.style.opacity = 0;
+              transitionBody.style.opacity = 0;
 
-                setTimeout(() => {
-                  loading.style.opacity = 0;
-                }, 250);
-              }
-            )
+              background.style.opacity = 1;
+              bodyBase.style.opacity = 1;
+              bodyClothes.style.opacity = 1;
+              headClothes.style.opacity = 1;
+
+              setTimeout(() => {
+                loading.style.opacity = 0;
+              }, 250);
+            })
             .catch((error) => {
               console.error(error.message);
             });
