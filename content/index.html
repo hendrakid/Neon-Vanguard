@@ -235,11 +235,7 @@
       </div>
       <div class="floating-buttons" id="button-container">
         <div class="collapse-button" id="collapse-button">
-          <img
-            id="menu-toggle"
-            src="./src/UI/menu-button.webp"
-            alt="Collapse"
-          />
+          <img id="menu-toggle" alt="Collapse" />
         </div>
         <div id="button-group-container" class="button-group-container hidden">
           <!-- Menu Button -->
@@ -272,12 +268,7 @@
           <div class="middle-bottom-div">
             <img id="buttonDownload" class="toggle-button logo" />
           </div>
-
-          <img
-            id="menu-box"
-            src="./src/UI/menu-box.webp"
-            class="menu-background-frame"
-          />
+          <img id="menu-box" class="menu-background-frame" />
           <!-- Menu Button -->
         </div>
         <div
@@ -292,8 +283,9 @@
       const buttonHeadgear = document.getElementById("buttonHeadgear");
       const buttonClothes = document.getElementById("buttonClothes");
       const buttonAura = document.getElementById("buttonAura");
-
+      const menuBox = document.getElementById("menu-box");
       const menuToggle = document.getElementById("menu-toggle");
+
       const slider = document.getElementById("slider");
 
       const allToggle = document.getElementById("toggle-img-all");
@@ -323,8 +315,6 @@
       );
       const collapseButton = document.getElementById("collapse-button");
 
-      const buttonContainer = document.getElementById("button-container");
-
       let isAllActive = false;
       let isHeadActive = false;
       let isBodyActive = false;
@@ -345,6 +335,8 @@
         buttonDownload: "./src/UI/button-download.webp",
         buttonHeadgear: "./src/UI/button-headgear.webp",
         buttonTransform: "./src/UI/button-transform.webp",
+        menuBox: "./src/UI/menu-box.webp",
+        menuToggle: "./src/UI/menu-button.webp",
       };
 
       const UIImagePathsBase64 = {
@@ -440,6 +432,8 @@
             loadImage(buttonDownload, UIImagePaths.buttonDownload),
             loadImage(buttonHeadgear, UIImagePaths.buttonHeadgear),
             loadImage(buttonTransform, UIImagePaths.buttonTransform),
+            loadImage(menuBox, UIImagePaths.menuBox),
+            loadImage(menuToggle, UIImagePaths.menuToggle),
           ];
           // Wait for all assets to load
           Promise.all(promises)
@@ -709,13 +703,11 @@
 
         isAuraActive = activated;
         if (activated) {
-          aura.src = videoPaths.aura;
-          aura.style.display = "block";
-          aura.onloadedmetadata = function () {
-            aura.play();
-          };
+          aura.style.opacity = 1;
+          aura.play();
         } else {
-          aura.style.display = "none";
+          aura.style.opacity = 0;
+          aura.pause();
         }
         hideButtonGroup();
       }
