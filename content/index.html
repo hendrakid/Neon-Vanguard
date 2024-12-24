@@ -200,8 +200,10 @@
       <img id="background" class="background" crossorigin="anonymous" />
       <div class="image-container">
         <img id="base-body" class="image overlay" crossorigin="anonymous" />
-        <img id="body" class="image overlay" crossorigin="anonymous" />
-        <img id="head" class="image overlay" crossorigin="anonymous" />
+        <img id="body-armor" class="image overlay" crossorigin="anonymous" />
+        <img id="head-armor" class="image overlay" crossorigin="anonymous" />
+        <img id="body-clothes" class="image overlay" crossorigin="anonymous" />
+        <img id="head-clothes" class="image overlay" crossorigin="anonymous" />
         <video
           id="aura-video"
           class="image overlay"
@@ -308,9 +310,15 @@
       const slider = document.getElementById("slider");
 
       const bodyBase = document.getElementById("base-body");
-      const body = document.getElementById("body");
-      const head = document.getElementById("head");
+      const bodyArmor = document.getElementById("body-armor");
+      const headArmor = document.getElementById("head-armor");
+      const bodyClothes = document.getElementById("body-clothes");
+      const headClothes = document.getElementById("head-clothes");
+
       const aura = document.getElementById("aura-video");
+      const transitionHead = document.getElementById("transition-head-video");
+      const transitionBody = document.getElementById("transition-body-video");
+
       const container = document.getElementById("container");
       const loading = document.getElementById("loading-video");
       const background = document.getElementById("background");
@@ -346,75 +354,169 @@
         aura: "./src/aura.webm",
       };
 
-      window.onload = function () {
-        console.log("start preload " + new Date().toLocaleTimeString());
+      // new window.onload
 
+      window.onload = function () {
+        
         loading.style.opacity = 1;
         loading.src = "./src/UI/loading.webm";
         loading.onloadedmetadata = function () {
           loading.play();
         };
 
-        container.style.display = "none";
-        container.style.opacity = 0;
+        // Function to create a promise for image loading
+        const loadImage = (src) => {
+          return new Promise((resolve, reject) => {
+            const img = new Image();
+            img.onload = () => resolve(img);
+            img.onerror = () =>
+              reject(new Error(`Failed to load image: ${src}`));
+            img.src = src;
+          });
+        };
 
-        Promise.all([preloadImages(), preloadVideos()]).then(() => {
-          console.log("finish preload " + new Date().toLocaleTimeString());
+        // Function to create a promise for video loading
+        const loadVideo = (videoElement, src) => {
+          return new Promise((resolve, reject) => {
+            videoElement.onloadeddata = () => resolve(videoElement);
+            videoElement.onerror = () =>
+              reject(new Error(`Failed to load video: ${src}`));
+            videoElement.src = src;
+          });
+        };
 
-          container.style.display = "block";
-          container.style.opacity = 1;
+        // Create promises for all assets
+        const promises = [
+          loadImage(imagePaths.bodyBase),
+          loadImage(imagePaths.bodyArmor),
+          loadImage(imagePaths.headArmor),
+          loadImage(imagePaths.bodyClothes),
+          loadImage(imagePaths.headClothes),
+          loadImage(imagePaths.background),
+          loadVideo(aura, videoPaths.aura),
+          loadVideo(transitionHead, videoPaths.head),
+          loadVideo(transitionBody, videoPaths.body),
+        ];
 
-          bodyBase.src = imagePaths.bodyBase;
-          background.src = imagePaths.background;
+        // Wait for all assets to load
+        Promise.all(promises)
+          .then(
+            ([
+              loadedBodyBase,
+              loadedBodyArmor,
+              loadedHeadArmor,
+              loadedBodyClothes,
+              loadedHeadClothes,
+              loadedBackground,
+              loadedAura,
+              loadedTransitionHead,
+              loadedTransitionBody,
+            ]) => {
+              console.log("All assets loaded successfully!");
 
-          loading.style.opacity = 0;
-          setImage("head", false);
-          setImage("body", false);
-          background.onload = function () {
-            moveBackground(50);
-          };
-          // loading.remove();
-        });
+              // Assign loaded assets to the elements
+              bodyBase.src = loadedBodyBase.src;
+              bodyArmor.src = loadedBodyArmor.src;
+              headArmor.src = loadedHeadArmor.src;
+              bodyClothes.src = loadedBodyClothes.src;
+              headClothes.src = loadedHeadClothes.src;
+              background.src = loadedBackground.src;
+
+              aura.src = loadedAura.src;
+              transitionHead.src = loadedTransitionHead.src;
+              transitionBody.src = loadedTransitionBody.src;
+
+              // Perform additional actions here
+
+              loading.style.opacity = 0;
+            }
+          )
+          .catch((error) => {
+            console.error(error.message);
+          });
       };
 
-      function preloadImages() {
-        return new Promise((resolve) => {
-          let loadedImages = 0;
-          const totalImages = Object.values(imagePaths).flat().length;
+      //
 
-          for (const key in imagePaths) {
-            const img = new Image();
-            img.src = imagePaths[key];
-            img.onload = () => {
-              loadedImages++;
-              if (loadedImages === totalImages) resolve();
-            };
-            img.onerror = () => {
-              loadedImages++;
-              if (loadedImages === totalImages) resolve();
-            };
-          }
-        });
-      }
-      function preloadVideos() {
-        return new Promise((resolve) => {
-          let loadedVideos = 0;
-          const totalVideos = Object.keys(videoPaths).length;
+      // window.onload = function () {
+      //   console.log("start preload " + new Date().toLocaleTimeString());
 
-          for (const key in videoPaths) {
-            const video = document.createElement("video");
-            video.src = videoPaths[key];
-            video.onloadeddata = () => {
-              loadedVideos++;
-              if (loadedVideos === totalVideos) resolve();
-            };
-            video.onerror = () => {
-              loadedVideos++;
-              if (loadedVideos === totalVideos) resolve();
-            };
-          }
-        });
-      }
+      //   loading.style.opacity = 1;
+      //   loading.src = "./src/UI/loading.webm";
+      //   loading.onloadedmetadata = function () {
+      //     loading.play();
+      //   };
+
+      //   container.style.display = "none";
+      //   container.style.opacity = 0;
+
+      //   // promise these
+      //   bodyBase.src = imagePaths.bodyBase;
+      //   bodyArmor.src = imagePaths.bodyArmor;
+      //   headArmor.src = imagePaths.headArmor;
+      //   bodyClothes.src = imagePaths.bodyClothes;
+      //   headClothes.src = imagePaths.headClothes;
+
+      //   aura.src = videoPaths.aura;
+      //   transitionHead.src = videoPaths.head;
+      //   transitionBody.src = videoPaths.body;
+
+      //   background.src = imagePaths.background;
+
+      //   Promise.all([preloadImages(), preloadVideos()]).then(() => {
+      //     console.log("finish preload " + new Date().toLocaleTimeString());
+
+      //     container.style.display = "block";
+      //     container.style.opacity = 1;
+
+      //     loading.style.opacity = 0;
+      //     setImage("head", false);
+      //     setImage("body", false);
+      //     background.onload = function () {
+      //       moveBackground(50);
+      //     };
+      //     // loading.remove();
+      //   });
+      // };
+
+      // function preloadImages() {
+      //   return new Promise((resolve) => {
+      //     let loadedImages = 0;
+      //     const totalImages = Object.values(imagePaths).flat().length;
+
+      //     for (const key in imagePaths) {
+      //       const img = new Image();
+      //       img.src = imagePaths[key];
+      //       img.onload = () => {
+      //         loadedImages++;
+      //         if (loadedImages === totalImages) resolve();
+      //       };
+      //       img.onerror = () => {
+      //         loadedImages++;
+      //         if (loadedImages === totalImages) resolve();
+      //       };
+      //     }
+      //   });
+      // }
+      // function preloadVideos() {
+      //   return new Promise((resolve) => {
+      //     let loadedVideos = 0;
+      //     const totalVideos = Object.keys(videoPaths).length;
+
+      //     for (const key in videoPaths) {
+      //       const video = document.createElement("video");
+      //       video.src = videoPaths[key];
+      //       video.onloadeddata = () => {
+      //         loadedVideos++;
+      //         if (loadedVideos === totalVideos) resolve();
+      //       };
+      //       video.onerror = () => {
+      //         loadedVideos++;
+      //         if (loadedVideos === totalVideos) resolve();
+      //       };
+      //     }
+      //   });
+      // }
 
       function setActiveToggle(element, activated) {
         element.classList.remove("on");
