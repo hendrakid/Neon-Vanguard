@@ -329,6 +329,9 @@
         buttonHeadgear: "./src/UI/button-headgear.webp",
         buttonTransform: "./src/UI/button-transform.webp",
         menuBox: "./src/UI/menu-box.webp",
+      };
+
+      const UIImagePathsBase64 = {
         buttonSwitchOn: "./src/UI/button-switch-on.webp",
         buttonSwitchOff: "./src/UI/button-switch-off.webp",
       };
@@ -340,10 +343,6 @@
       };
 
       // new window.onload
-
-      const cache_imageSwitchOn = new Image();
-      const cache_imageSwitchOff = new Image();
-      const cache_imageMenuBox = new Image();
 
       // Function to load an image and convert it to Base64
       const loadImageAsBase64 = (src) => {
@@ -369,12 +368,28 @@
 
       window.onload = function () {
         console.log("start preload " + new Date().toLocaleTimeString());
- /*       loading.style.opacity = 1;
+        loading.style.opacity = 1;
         loading.src = "./src/UI/loading.webm";
         loading.onloadedmetadata = function () {
           loading.play();
 
-          // Function to create a promise for image loading
+          Promise.all(
+            Object.entries(UIImagePathsBase64).map(([key, path]) =>
+              loadImageAsBase64(path).then((base64) => {
+                cache[key] = base64; // Store Base64 string in cache
+              })
+            )
+          )
+            .then(() => {
+              console.log("Images cached as Base64:", cache);
+
+              allToggle.src = cache.buttonSwitchOff;
+              headToggle.src = cache.buttonSwitchOff;
+              bodyToggle.src = cache.buttonSwitchOff;
+              auraToggle.src = cache.buttonSwitchOff;
+            })
+            .catch((error) => console.error(error.message));
+
           const loadImage = (imageElement, src) => {
             return new Promise((resolve, reject) => {
               imageElement.onload = () => resolve(imageElement);
@@ -383,8 +398,6 @@
               imageElement.src = src;
             });
           };
-
-          // Function to create a promise for video loading
           const loadVideo = (videoElement, src) => {
             return new Promise((resolve, reject) => {
               videoElement.onloadeddata = () => resolve(videoElement);
@@ -413,18 +426,12 @@
             loadImage(buttonTransform, UIImagePaths.buttonTransform),
 
             loadImage(cache_imageMenuBox, UIImagePaths.menuBox),
-            loadImage(cache_imageSwitchOn, UIImagePaths.buttonSwitchOn),
-            loadImage(cache_imageSwitchOff, UIImagePaths.buttonSwitchOff),
           ];
           // Wait for all assets to load
           Promise.all(promises)
             .then(() => {
               console.log("finish preload " + new Date().toLocaleTimeString());
 
-              allToggle.src = cache_imageSwitchOff.src;
-              headToggle.src = cache_imageSwitchOff.src;
-              bodyToggle.src = cache_imageSwitchOff.src;
-              auraToggle.src = cache_imageSwitchOff.src;
               buttonGroupContainer.style.backgroundImage = `url(${cache_imageMenuBox.src})`;
 
               headArmor.style.opacity = 0;
@@ -446,22 +453,6 @@
               console.error(error.message);
             });
         };
-*/
-        Promise.all(
-          Object.entries(UIImagePaths).map(([key, path]) =>
-            loadImageAsBase64(path).then((base64) => {
-              cache[key] = base64; // Store Base64 string in cache
-            })
-          )
-        )
-          .then(() => {
-            console.log("Images cached as Base64:", cache);
-
-            // Example: Use cached Base64 images
-            const toggleImgHead = document.getElementById("toggle-img-head");
-            toggleImgHead.src = cache.buttonSwitchOff; // Set Base64 string as src
-          })
-          .catch((error) => console.error(error.message));
       };
 
       //
@@ -555,11 +546,11 @@
         // Use a small timeout to allow the transition to take effect before changing the image source
         setTimeout(() => {
           if (activated) {
-            element.src = cache_imageSwitchOn.src;
+            element.src = cache.buttonSwitchOn;
             element.classList.remove("off");
             element.classList.add("on");
           } else {
-            element.src = cache_imageSwitchOff.src;
+            element.src = cache.buttonSwitchOff;
             element.classList.remove("on");
             element.classList.remove("off");
           }
