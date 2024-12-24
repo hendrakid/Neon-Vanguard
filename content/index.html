@@ -355,94 +355,93 @@
 
       // new window.onload
 
-      // Function to create a promise for image loading
-      const loadImage = (imageElement, src) => {
-        return new Promise((resolve, reject) => {
-          imageElement.onload = () => resolve(imageElement);
-          imageElement.onerror = () =>
-            reject(new Error(`Failed to load image: ${src}`));
-          imageElement.src = src;
-        });
-      };
-
-      // Function to create a promise for video loading
-      const loadVideo = (videoElement, src) => {
-        return new Promise((resolve, reject) => {
-          videoElement.onloadeddata = () => resolve(videoElement);
-          videoElement.onerror = () =>
-            reject(new Error(`Failed to load video: ${src}`));
-          videoElement.src = src;
-        });
-      };
-
-      // Create promises for all assets
-      const promises = [
-        loadImage(bodyBase, imagePaths.bodyBase),
-        loadImage(bodyArmor, imagePaths.bodyArmor),
-        loadImage(headArmor, imagePaths.headArmor),
-        loadImage(bodyClothes, imagePaths.bodyClothes),
-        loadImage(headClothes, imagePaths.headClothes),
-        loadImage(background, imagePaths.background),
-        loadVideo(aura, videoPaths.aura),
-        loadVideo(transitionHead, videoPaths.head),
-        loadVideo(transitionBody, videoPaths.body),
-      ];
-
       window.onload = function () {
         loading.style.opacity = 1;
         loading.src = "./src/UI/loading.webm";
         loading.onloadedmetadata = function () {
           loading.play();
 
+          // Function to create a promise for image loading
+          const loadImage = (imageElement, src) => {
+            return new Promise((resolve, reject) => {
+              imageElement.onload = () => resolve(imageElement);
+              imageElement.onerror = () =>
+                reject(new Error(`Failed to load image: ${src}`));
+              imageElement.src = src;
+            });
+          };
+
+          // Function to create a promise for video loading
+          const loadVideo = (videoElement, src) => {
+            return new Promise((resolve, reject) => {
+              videoElement.onloadeddata = () => resolve(videoElement);
+              videoElement.onerror = () =>
+                reject(new Error(`Failed to load video: ${src}`));
+              videoElement.src = src;
+            });
+          };
+
+          // Create promises for all assets
+          const promises = [
+            loadImage(bodyBase, imagePaths.bodyBase),
+            loadImage(bodyArmor, imagePaths.bodyArmor),
+            loadImage(headArmor, imagePaths.headArmor),
+            loadImage(bodyClothes, imagePaths.bodyClothes),
+            loadImage(headClothes, imagePaths.headClothes),
+            loadImage(background, imagePaths.background),
+            loadVideo(aura, videoPaths.aura),
+            loadVideo(transitionHead, videoPaths.head),
+            loadVideo(transitionBody, videoPaths.body),
+          ];
           // Wait for all assets to load
-          // Promise.all(promises)
-          //   .then(
-          //     ([
-          //       loadedBodyBase,
-          //       loadedBodyArmor,
-          //       loadedHeadArmor,
-          //       loadedBodyClothes,
-          //       loadedHeadClothes,
-          //       loadedBackground,
-          //       loadedAura,
-          //       loadedTransitionHead,
-          //       loadedTransitionBody,
-          //     ]) => {
-          //       console.log("All assets loaded successfully!");
+          Promise.all(promises)
+            .then(
+              ([
+                loadedBodyBase,
+                loadedBodyArmor,
+                loadedHeadArmor,
+                loadedBodyClothes,
+                loadedHeadClothes,
+                loadedBackground,
+                loadedAura,
+                loadedTransitionHead,
+                loadedTransitionBody,
+              ]) => {
+                console.log("All assets loaded successfully!");
 
-          //       // Assign loaded assets to the elements
-          //       // bodyBase.src = loadedBodyBase.src;
-          //       // bodyArmor.src = loadedBodyArmor.src;
-          //       // headArmor.src = loadedHeadArmor.src;
-          //       // bodyClothes.src = loadedBodyClothes.src;
-          //       // headClothes.src = loadedHeadClothes.src;
-          //       // background.src = loadedBackground.src;
+                // Assign loaded assets to the elements
+                // bodyBase.src = loadedBodyBase.src;
+                // bodyArmor.src = loadedBodyArmor.src;
+                // headArmor.src = loadedHeadArmor.src;
+                // bodyClothes.src = loadedBodyClothes.src;
+                // headClothes.src = loadedHeadClothes.src;
+                // background.src = loadedBackground.src;
 
-          //       // aura.src = loadedAura.src;
-          //       // transitionHead.src = loadedTransitionHead.src;
-          //       // transitionBody.src = loadedTransitionBody.src;
+                // aura.src = loadedAura.src;
+                // transitionHead.src = loadedTransitionHead.src;
+                // transitionBody.src = loadedTransitionBody.src;
 
-          //       // Perform additional actions here
+                // Perform additional actions here
 
-          //       headArmor.style.opacity = 0;
-          //       bodyArmor.style.opacity = 0;
-          //       aura.style.opacity = 0;
-          //       transitionHead.style.opacity = 0;
-          //       transitionBody.style.opacity = 0;
+                headArmor.style.opacity = 0;
+                bodyArmor.style.opacity = 0;
+                aura.style.opacity = 0;
+                transitionHead.style.opacity = 0;
+                transitionBody.style.opacity = 0;
 
-          //       background.style.opacity = 1;
-          //       bodyBase.style.opacity = 1;
-          //       bodyClothes.style.opacity = 1;
-          //       headClothes.style.opacity = 1;
+                background.style.opacity = 1;
+                bodyBase.style.opacity = 1;
+                bodyClothes.style.opacity = 1;
+                headClothes.style.opacity = 1;
 
-          //       setTimeout(() => {
-          //         loading.style.opacity = 0;
-          //       }, 250);
-          //     }
-          //   )
-          //   .catch((error) => {
-          //     console.error(error.message);
-          //   });
+                setTimeout(() => {
+                  loading.style.opacity = 0;
+                }, 250);
+              }
+            )
+            .catch((error) => {
+              console.error(error.message);
+            });
         };
       };
 
