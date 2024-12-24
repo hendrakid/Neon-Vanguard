@@ -336,7 +336,6 @@
       let isHeadActive = false;
       let isBodyActive = false;
       let isAuraActive = false;
-      let isTransitioning = false;
 
       const imagePaths = {
         bodyBase: "./src/body.webp",
@@ -550,7 +549,7 @@
           }
         }, 100);
       }
-      function playTransition(attribute, activated, callback) {
+      function playTransition(attribute, activated) {
         hideButtonGroup();
 
         let videoElement = null;
@@ -586,8 +585,6 @@
                 videoElement.style.opacity = 0;
               }, 50);
               // Hide the video element
-              callback();
-              // Execute callback after reverse playback
             }
           };
           stepBackward();
@@ -596,23 +593,18 @@
           videoElement.style.opacity = 1;
           videoElement.play();
 
-          // When the video ends, hide it and execute the callback
           videoElement.onended = function () {
             setImage(attribute, activated);
             videoElement.pause();
             setTimeout(() => {
               videoElement.style.opacity = 0;
             }, 50);
-
-            callback();
           };
 
           // Handle video playback errors
           videoElement.onerror = function () {
             console.error(`Error playing transition video: ${videoSrc}`);
             videoElement.style.opacity = 0;
-            callback();
-            // Proceed even if the video fails
           };
         }
       }
@@ -696,10 +688,7 @@
           }
         }
 
-        playTransition(attribute, activated, true, () => {
-          console.log("no call back");
-          isTransitioning = false;
-        });
+        playTransition(attribute, activated);
       }
 
       function playAura(element) {
