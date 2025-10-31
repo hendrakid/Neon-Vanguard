@@ -43,12 +43,28 @@
         object-fit: contain;
       }
 
+      #aura-video {
+        z-index: 90; /* Highest z-index for the top layer */
+      }
+      #transition-head-video {
+        z-index: 80;
+      }
+      #head-armor {
+        z-index: 70;
+      }
+      #transition-body-video {
+        z-index: 60;
+      }
+      #body-armor {
+        z-index: 50;
+      }
       .overlay {
         position: absolute;
         top: 0;
         left: 50%;
         transform: translateX(-50%);
         right: auto;
+        z-index: 10; /* Give the static images a baseline z-index */
       }
       .opacity-ease-02 {
         transition: opacity 0.2s ease;
